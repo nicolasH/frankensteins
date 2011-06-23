@@ -1,0 +1,15 @@
+Calendar About Nothing
+
+A while ago, there was a HN post about [Jerry Seinfeld's Productivity Secret](http://news.ycombinator.com/item?id=1033433). In the comments, a few interesting links showed up, amongst which [calendar about nothing][can] which generates your streak (an unbroken sequence of days in which you attained some personnal objective) from your public (open source) github commits. 
+
+When It was mentioned again a few month later in another HN post ([Ask HN: Share a gem. Teach me and you.](http://news.ycombinator.com/item?id=1557119)) and I was already using github, I decided to give it a try. Long story short, my public output [dramatically increased][github_n] :
+<center>
+<a href="http://www.flickr.com/photos/nico_h/5076464120/" title="calendaraboutnothing_effects by nico h, on Flickr"><img src="http://farm5.static.flickr.com/4047/5076464120_e7e3bdf341.jpg" width="275" height="500" alt="calendaraboutnothing_effects" /></a>
+</center>
+
+Obviously not all days are equally productive, but at least [every day][can_n] I move something forward, either some code or some content for this blog (as announced earlier, this blog's content is on [publicly available on github][github_nnmc]). One of the drawbacks is that on some days I do a commit, keep working and only commit these changes the next day. But on average, it is a net gain.
+
+[can]:http://calendaraboutnothing.com
+[can_n]:http://calendaraboutnothing.com/~nicolash
+[github_n]:http://github.com/nicolash
+[github_nnmc]:http://github.com/nicolasH/content_nnmc

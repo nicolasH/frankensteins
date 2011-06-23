@@ -1,0 +1,52 @@
+Extracting pixels from a Java BufferedImage
+
+a.k.a 'clipping'.
+
+If you expect to retain the original image, you can use `BufferedImage.getSubimage(x, y, h, w)`, which should be fast and memory efficient, as, per the Javadoc, it "*Returns a subimage defined by a specified rectangular region. The returned BufferedImage **shares the same data array** as the original image*".
+   
+If you expect to eventually get rid of the original image while keeping the clip, using this method will create a memory leak as, when you set the reference to the original to `null`, each clip will retain a link to the original raster and prevent it from being garbage collected.
+
+Here are two ways of creating an independent copy of a sub part of the original image :
+
+ - in a succint but slow manner:
+
+<div class="embedded_gist">
+<script src="http://gist.github.com/598255.js?file=slowClip.java"></script>
+</div>
+
+
+ - in a much more verbose but 10 times faster manner:
+
+<div class="embedded_gist"><script src="http://gist.github.com/598278.js?file=fastClip.java"></script>
+</div>
+
+Here are the time measured, on the same machine, for clipping a 200x200 pixel area from the center of a bigger image 1000 times, 10 times in a row :
+
+    slowClip :1000 times = 3717 ms
+    slowClip :1000 times = 3440 ms
+    slowClip :1000 times = 3409 ms
+    slowClip :1000 times = 3406 ms
+    slowClip :1000 times = 3403 ms
+    slowClip :1000 times = 3399 ms
+    slowClip :1000 times = 3390 ms
+    slowClip :1000 times = 3397 ms
+    slowClip :1000 times = 3390 ms
+    slowClip :1000 times = 3597 ms
+
+    fastClip :1000 times = 366 ms
+    fastClip :1000 times = 269 ms
+    fastClip :1000 times = 336 ms
+    fastClip :1000 times = 252 ms
+    fastClip :1000 times = 226 ms
+    fastClip :1000 times = 232 ms
+    fastClip :1000 times = 220 ms
+    fastClip :1000 times = 222 ms
+    fastClip :1000 times = 221 ms
+    fastClip :1000 times = 266 ms
+
+
+Your pick :-)
+
+I implemented these two methods after reading this related thread from stackoverflow [about *fast copy of BufferedImage pixels*](http://stackoverflow.com/questions/2825837/java-how-to-do-fast-copy-of-a-bufferedimages-pixels-unit-test-included).
+
+As an added benefit, the fast clip method takes around the same time should you ever want to reverse the content of the clip vertically in the same operation. You just have to change the start index and the line offset.

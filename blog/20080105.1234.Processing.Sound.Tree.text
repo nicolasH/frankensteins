@@ -1,0 +1,21 @@
+Processing Sound Tree
+How to make the processing example situated [there][3dSoundTree] work :
+
+
+<object type="application/x-shockwave-flash" width="400" height="300" data="http://www.vimeo.com/moogaloop.swf?clip_id=431611&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=">	<param name="quality" value="best" />	<param name="allowfullscreen" value="true" />	<param name="scale" value="showAll" />	<param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=431611&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=" /></object><br /><i><a href="http://www.vimeo.com/431611/l:embed_431611">3D Audio Tree</a> from <a href="http://www.vimeo.com/user230716/l:embed_431611">Matthew Kozak</a> on <a href="http://vimeo.com/l:embed_431611">Vimeo</a>.
+</i>
+
+*  Install [processing](http://www.processing.org)
+*  Download the [3d sound tree source][3dSoundTree] (scroll down.)
+*  Download the following libraries : 
+   *  [minim](http://code.compartmental.net/tools/minim "sound manipulation library for processing")
+   *  [controlP5](http://www.sojamo.de/libraries/controlP5/)
+   *  [Tuple](http://screamyguy.net/Tuple/index.htm)
+   *  [SGCamera](http://screamyguy.net/SGCamera/index.htm)
+   *  [SGGui](http://screamyguy.net/SGGUI/index.htm)
+
+note: all the screamyGuy stuff have to be unzipped from the command line on mac os x, otherwise the udecompress utility creates a directory with backslash in the name.
+ 
+place all the directories containing the library directory in the processing library directory.
+
+[3dSoundTree] : http://processing.org/discourse/yabb_beta/YaBB.cgi?board=Sound;action=display;num=1196771719 "3d tree growing from the sound"

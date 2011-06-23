@@ -1,0 +1,12 @@
+Gigantic Panoramas
+
+Crazy what you can do with patience and <a href="http://www.autostitch.net/">autostitch</a> ! Both picture here are made of 30 something picture. This are the "max flickr size" version so that flickr can do the thumbnails (max 15000px wide). I uploaded the originals too. They are 19800 and 22800 px wide, but have black thumbnails. Maybe someday I will dislplay them on a lot of screen using displayator.   
+<center><small><i>
+<a href="http://www.flickr.com/photos/nico_h/437918983/" title="Photo Sharing"><img src="http://farm1.static.flickr.com/185/437918983_7a02852d45.jpg" alt="360° panorama from Rotenboden" height="42" width="480" /></a>   
+<a href="http://flickr.com/photo_zoom.gne?id=428136127&size=o">click here to go to the original circular panorama</a>   
+   
+<a href="http://www.flickr.com/photos/nico_h/437915831/" title="Photo Sharing"><img src="http://farm1.static.flickr.com/145/437915831_87a1a825ca.jpg" alt="Wide panorama from Rotenboden" height="42" width="480" /></a>   
+<a href="http://flickr.com/photo_zoom.gne?id=428103381&amp;size=o">click here to get to the original 180° panorama</a>   
+</i></small></center>
+Bugs met during making of those pictures : I was using the demo of autostitch and had to set the size of the generated panorama to be between 75 and 80% of the original. Otherwise I got some out of memory message. The memory option was set to the max possible(-1.5G) and I have 2G of memory installed.   
+In flickr, picture with one dimension >= 15000px (or an uncompressed size >250MB) will not get miniaturized. Miniatures will be replaced by black placeholder. <a href="http://flickr.com/help/photos/#153">It seems to be a longstanding known bug</a>. <a href="http://www.flickr.com/forums/bugs/12255/?search=black+thumbnails">I found a 18month old thread about that bug on their forum</a>.

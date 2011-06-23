@@ -1,0 +1,18 @@
+Value of e
+
+At work we have a cooperative based on the honor system. You take a drink or a snack, then you put one cross per item in a grid in front of your name.   
+
+I was bored with this array of X. So I started drawing little symbols and other stuff to change from the X. When the grid changed, I had to think about something else, and I  remembered the math lessons. So my next sequence of number was the digits of PI, and now I am searching for the digits of e.
+
+I went to the [wikipedia][we] entry, then tried the math.e python, and finally a colleague gave me [e to the 50,000 digit][e]. That's a lot of snacks.
+
+I am now trying to find the next number or sequence to use for the next refill of the fridge.
+
+For future references, here is e to the 20th digit from [wikipedia][we]:   
+2.71828 18284 59045 23536
+
+and from [Piguy's Math Page][e], e to the  50th digit:   
+2.71828 18284 59045 23536 02874 71352 66249 77572 47093 69995 
+
+[e]:http://www.geocities.com/capecanaveral/hall/1216/numtab/e.htm
+[we]:http://en.wikipedia.org/wiki/E_(mathematical_constant)

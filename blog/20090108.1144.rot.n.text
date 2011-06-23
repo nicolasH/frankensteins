@@ -1,0 +1,37 @@
+Rotation ciper in PHP 
+
+a.k.a ([Caesar Cipher][cc])   
+
+*update 2009/01/09 : I made a [JavaScript version][ccl] you can play with.*
+
+There was a text advert on Daring Fireball which seemed to be obviously a shifted text. (i.e. the rotation of an intelligible text was used). That prompted me to try and decode it. I'm lazy, so i didn't want to do it by hand. The scripting laguage that I currently use is php, so I looked for a text rotation method in php, but the only one I could find is *rot_13*, which rotates the text by 13, but that didn't give me the answer. So I coded my own arbitrary rotation function. Here it is :   
+
+	$str="Ztte pc tnt dc BprWtxhi iwxh lttz. Hdbtiwx cv’h vdxcv sdlc…";
+	$rot = 11;
+	print "rotation = $rot . Rotated text: ". rot_n($str,$rot) . "\n";
+	function rot_n($str,$rot){
+		$upperOffset = 65;
+		$lowerOffset = 97;
+		$ret="";
+		for($i=0; $i<strlen($str); $i++){
+			$c = ord(substr($str,$i,1));
+			if($c>64 && $c < 91){
+				$ret.=chr(($c-$upperOffset+$rot)%26+$upperOffset);
+			}
+			else {
+				if( $c>96 && $c<123){
+				    $ret.=chr(($c-$lowerOffset+$rot)%26+$lowerOffset);
+				}else {
+					$ret.=chr($c);
+				}
+			}
+		}
+		return $ret;
+	}
+
+You can use this to code and decode :-).
+<s>Maybe i'll do a javascript version of this function.</s>[Done][ccl] and commited in [github][git].
+
+[cc]: http://en.wikipedia.org/wiki/Caesar_cipher "Caesar cipher wikipedia entry"
+[ccl]:http://www.niconomicon.net/tests/caesarcypher/caesarCipher.html "encode and decode Casear cipher encoded text"
+[git]:http://github.com/nicolasH/caesarcypher/tree/master/caesarCipher.html "GitHub repository of the webpage. Because git and github are cool !"

@@ -1,0 +1,118 @@
+The Internet from Dili
+
+This is the internet from Dili, on the Timor Telecom Netbo'ot Xlais (3G) plan. The one that takes you 1 month and a letter from one's wife's employer to get. One month because the billing system for post-paid plans is down from the last upgrade. And a letter from a UN organization or Big Company because there is no such thing as automatic bank transfer (yet) in East Timor or much of a postal service. So they need a stable organization to vouch for you. And you have to go to their office to pay the internet bill. In cash.
+
+So here are a few ping times for `github.com`.
+
+When it's not working so good:
+<pre><code>
+PING www.github.com (207.97.227.243): 56 data bytes
+Request timeout for icmp_seq 0
+Request timeout for icmp_seq 1
+Request timeout for icmp_seq 2
+Request timeout for icmp_seq 3
+Request timeout for icmp_seq 4
+Request timeout for icmp_seq 5
+Request timeout for icmp_seq 6
+Request timeout for icmp_seq 7
+Request timeout for icmp_seq 8
+Request timeout for icmp_seq 9
+Request timeout for icmp_seq 10
+Request timeout for icmp_seq 11
+Request timeout for icmp_seq 12
+Request timeout for icmp_seq 13
+Request timeout for icmp_seq 14
+Request timeout for icmp_seq 15
+Request timeout for icmp_seq 16
+Request timeout for icmp_seq 17
+Request timeout for icmp_seq 18
+Request timeout for icmp_seq 19
+64 bytes from 207.97.227.243: icmp_seq=0 ttl=48 time=21000.422 ms
+64 bytes from 207.97.227.243: icmp_seq=1 ttl=48 time=20497.055 ms
+64 bytes from 207.97.227.243: icmp_seq=2 ttl=48 time=20422.630 ms
+64 bytes from 207.97.227.243: icmp_seq=4 ttl=48 time=18556.737 ms
+64 bytes from 207.97.227.243: icmp_seq=5 ttl=48 time=17873.283 ms
+64 bytes from 207.97.227.243: icmp_seq=7 ttl=48 time=16648.719 ms
+64 bytes from 207.97.227.243: icmp_seq=8 ttl=48 time=15675.208 ms
+64 bytes from 207.97.227.243: icmp_seq=11 ttl=48 time=16667.384 ms
+64 bytes from 207.97.227.243: icmp_seq=12 ttl=48 time=15810.244 ms
+64 bytes from 207.97.227.243: icmp_seq=13 ttl=48 time=15127.921 ms
+...
+</code></pre>
+Still works, kinda.
+
+Here it is at its best: 
+<code><pre>
+PING www.github.com (207.97.227.243): 56 data bytes
+64 bytes from 207.97.227.243: icmp_seq=0 ttl=46 time=750.208 ms
+64 bytes from 207.97.227.243: icmp_seq=1 ttl=46 time=749.479 ms
+64 bytes from 207.97.227.243: icmp_seq=2 ttl=46 time=748.548 ms
+64 bytes from 207.97.227.243: icmp_seq=3 ttl=46 time=758.857 ms
+64 bytes from 207.97.227.243: icmp_seq=4 ttl=46 time=758.581 ms
+64 bytes from 207.97.227.243: icmp_seq=5 ttl=46 time=747.524 ms
+64 bytes from 207.97.227.243: icmp_seq=6 ttl=46 time=767.582 ms
+64 bytes from 207.97.227.243: icmp_seq=7 ttl=46 time=811.335 ms
+64 bytes from 207.97.227.243: icmp_seq=8 ttl=46 time=746.080 ms
+64 bytes from 207.97.227.243: icmp_seq=9 ttl=46 time=747.759 ms
+64 bytes from 207.97.227.243: icmp_seq=10 ttl=46 time=747.045 ms
+64 bytes from 207.97.227.243: icmp_seq=11 ttl=46 time=786.805 ms
+64 bytes from 207.97.227.243: icmp_seq=12 ttl=46 time=754.027 ms
+64 bytes from 207.97.227.243: icmp_seq=13 ttl=46 time=803.607 ms
+64 bytes from 207.97.227.243: icmp_seq=14 ttl=46 time=775.936 ms
+^C
+--- www.github.com ping statistics ---
+16 packets transmitted, 15 packets received, 6.2% packet loss
+round-trip min/avg/max/stddev = 746.080/763.558/811.335/20.689 ms
+</pre></code>
+
+Oh well.
+
+Timor telecom is a joint venture with Portugal Telecom. East Timor is not connected to any subsea cable, so the access to the rest of the workd is by satellite. Until recently, the downlink was in Portugal, but I noticed today that it is now in Los Angeles, apparently even for european traffic :
+
+<pre><code>
+Ikki-8:~ niko$ traceroute www.lemonde.fr
+traceroute to orig-10011.lemonde.cotcdn.net (208.93.141.60), 64 hops max, 52 byte packets
+ 1  10.68.1.10 (10.68.1.10)  58.393 ms  48.982 ms  49.887 ms
+ 2  202.72.107.233 (202.72.107.233)  49.991 ms  48.808 ms  60.100 ms
+ 3  isp_rtr_ewsd.timortelecom.tp (202.72.104.25)  289.717 ms  198.158 ms  312.755 ms
+ 4  97.208.119.74.in-addr.arpa (74.119.208.97)  614.660 ms  714.006 ms  730.549 ms
+ 5  2.255.113.74.in-addr.arpa (74.113.255.2)  663.001 ms  709.718 ms  717.103 ms
+ 6  218.255.113.74.in-addr.arpa (74.113.255.218)  716.161 ms  715.386 ms  817.722 ms
+ 7  166.255.113.74.in-addr.arpa (74.113.255.166)  629.226 ms  700.693 ms  819.343 ms
+ 8  ae5-286.edge6.losangeles1.level3.net (4.59.50.49)  716.484 ms  920.396 ms  715.551 ms
+ 9  ae-3-80.edge2.losangeles9.level3.net (4.69.144.143)  736.165 ms
+    ae-1-60.edge2.losangeles9.level3.net (4.69.144.15)  717.403 ms  718.268 ms
+10  4.53.230.26 (4.53.230.26)  713.741 ms  716.148 ms  619.068 ms
+11  lb140.lsag.cotendo.net (208.93.141.60)  814.379 ms  705.175 ms  716.141 ms
+</code></pre>
+
+Another french site : 
+<pre><code>
+traceroute to www.macbidouille.fr (212.43.222.205), 64 hops max, 52 byte packets
+ 1  10.68.1.10 (10.68.1.10)  53.321 ms  58.998 ms  59.884 ms
+ 2  202.72.107.233 (202.72.107.233)  58.490 ms  54.145 ms  60.118 ms
+ 3  isp_rtr_ewsd.timortelecom.tp (202.72.104.25)  229.907 ms  247.107 ms  385.811 ms
+ 4  97.208.119.74.in-addr.arpa (74.119.208.97)  574.238 ms  580.288 ms  568.438 ms
+ 5  2.255.113.74.in-addr.arpa (74.113.255.2)  630.950 ms  627.160 ms  639.982 ms
+ 6  218.255.113.74.in-addr.arpa (74.113.255.218)  639.453 ms  638.748 ms  749.713 ms
+ 7  166.255.113.74.in-addr.arpa (74.113.255.166)  661.317 ms  767.899 ms  628.394 ms
+ 8  ae5-286.edge6.losangeles1.level3.net (4.59.50.49)  731.870 ms  664.324 ms  716.819 ms
+ 9  ae-44-90.car4.losangeles1.level3.net (4.69.144.198)  679.359 ms
+    ae-24-70.car4.losangeles1.level3.net (4.69.144.70)  731.518 ms
+    ae-14-60.car4.losangeles1.level3.net (4.69.144.6)  715.088 ms
+10  globalcrossing-level3-10ge.losangeles1.level3.net (4.68.110.66)  716.510 ms  770.715 ms  750.373 ms
+11  204.245.38.142 (204.245.38.142)  819.176 ms  716.645 ms  818.951 ms
+12  th2-cr1-ge-2-4.router.fr.clara.net (212.43.193.209)  819.045 ms  741.612 ms  829.885 ms
+13  fb-cr2-ge-0-2.router.fr.clara.net (212.43.193.181)  820.216 ms  818.374 ms  820.142 ms
+14  fb-fb-ar1-ge-7-2.router.fr.clara.net (212.43.193.222)  708.126 ms  716.031 ms  734.438 ms
+15  16.216.rev.dc-zone.net (212.43.216.16)  802.604 ms  818.576 ms  727.429 ms
+16  * * *
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+...
+</code></pre>
+
+Still shorter than talking to the moon I guess :-).
+

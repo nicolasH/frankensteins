@@ -1,0 +1,7 @@
+Google define
+Google Define is a search plugin for firefox. It is a very small modification of the default google firefox search plugin. The arguments will be passed to google with the "define:" prefix .   
+It is composed of the <a href="http://nikolas13.chez-alice.fr/googleDefine/googledefine.xml">xml file</a> (use "save as", do not try to see it in a browser: it start with a #) and the <a href="http://nikolas13.chez-alice.fr/googleDefine/googledefine.png">icon</a> (<a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://nikolas13.chez-alice.fr/googleDefine/googledefine.png"><img style="cursor: pointer; width: 16px;" src="http://nikolas13.chez-alice.fr/googleDefine/googledefine.png" alt="" border="0" /></a>).  you have to place them in the "searchplugin" directory of the firefox installation.   
+   
+It works well if you install google toolbar : you have two search box : one for google, one for google define ;)<a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://bp0.blogger.com/_AiksvzCLTdk/RdxvnLPu2AI/AAAAAAAAAAM/5-jPgZ2Xd50/s1600-h/screenShot_google_defineSmaller.png"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer;" src="http://bp0.blogger.com/_AiksvzCLTdk/RdxvnLPu2AI/AAAAAAAAAAM/5-jPgZ2Xd50/s400/screenShot_google_defineSmaller.png" alt="" id="BLOGGER_PHOTO_ID_5034021202317727746" border="0" /></a>   
+   
+<!-- width: 450px;-->
