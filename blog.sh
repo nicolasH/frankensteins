@@ -19,9 +19,10 @@ rm tmp.sh
 cat head_1 >> blog/index.html
 echo "Blog for Niconomicon" >> blog/index.html
 cat head_2 >> blog/index.html
-`sed -e :a -e '/\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed 's:blog\/\(.\{12\}\)\(.*\):\<div class=\"index\"\>\1<a href\=\"\2\<\/a\>\<\\div\>:'>>blog/index.html`
+
+`sed -e :a -e '/\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed 's:\(blog\/\)\(.\{12\}\)\.*blog\/\(.*\):\<div class=\"index\"\>\2<a href\=\"\3\<\/a\>\<\\div\>:'>>blog/index.html`
 rm titles
-cat footer >> index.html
+cat footer >> blog/index.html
 #echo $INDEX
 #And voila!
 
