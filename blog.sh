@@ -1,5 +1,13 @@
 #!/bin/bash
-echo 'My blog generating script : mostly commandline'
+
+
+if [ "$1" = "new" ]
+then
+    echo "creating an empty unamed blog post at blog/`date +%Y%m%d.%H%M`.text" 
+    touch blog/`date +%Y%m%d.%H%M`.text
+    exit
+fi
+
 echo 'Creating the directories'
 #create the year/month/day directories
 mkdir -p `ls -l blog/*.text| cut -c 46- | sed 's#\(blog\/[0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\).*#\1/\2/\3/#'|sort | uniq`
