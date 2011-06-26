@@ -8,6 +8,14 @@ then
     exit
 fi
 
+if [ "$1" = "clean" ]
+then
+    echo "Removing the generated html files"
+    rm -r blog/2006 blog/2007 blog/2008 blog/2009 blog/2010 blog/2011
+    rm blog/index.html
+    exit
+fi
+
 echo 'Creating the directories'
 #create the year/month/day directories
 mkdir -p `ls -l blog/*.text| cut -c 46- | sed 's#\(blog\/[0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\).*#\1/\2/\3/#'|sort | uniq`

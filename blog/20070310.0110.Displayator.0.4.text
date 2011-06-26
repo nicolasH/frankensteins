@@ -1,6 +1,0 @@
-Displayator 0.4
-You can now get <a href="http://nikolas13.chez-alice.fr/displayator_0.4_20070309.zip">displayator 0.4</a>. It introduce a new feature and a workaround for transmission errors. It's been done for some time, but I only got round to release it yesterday and post about it today.   
-<ul><li>Aligning displayers : I added a contextual menu item in the manager so that you have two more options : align dispayers horizontally or vertically. This items affect <span style="font-style: italic;">all the displayers. It is planned that it will, someday, affect only a selection of displayers.</li></ul><ul><li>Transmittion errors : Due to the fact that displayator still uses the default xmlrpc webserver, it happens that  sometimes, a tile displayed in the displayer tiles is misplaced or damaged. You can re-fetch these tile by alt+click on it.</li></ul>   
-That's all for now.   
-   
-Nico, out.
