@@ -12,7 +12,7 @@ lips."
 
 The goal of this software is to generate a static html blog from
 markdown compliant files. It is similar in aim to [jekyll][] and
-[hyde][], but with a smaller scope and much less elegance. 
+[hyde][], but with a smaller scope and much less elegance.
 
 It is mostly UNIX based. The current version uses [peg-multimarkdown from
 Fletcher Peney][mmd]. 
@@ -22,16 +22,16 @@ etc... which uses almost no variable.
 
 Usage:
 
-clone the project. it will check out all the files in this repo,
-including the 'templates' for the index and the posts.
+1. install [multimarkdown][mmd].
+2. clone the project to some directory.
+3. run `victor.sh init`
+4. run `victor.sh new "My First Post"`
+5. edit your first post file in the blog directory
+6. run `victor.sh gen`
+7. upload your blog directory to your web host.
+8. you have a blog!
 
-then, run once 
-`victor.sh init`
- which will rename the templates
 
-`victor.sh new "Its Alive!"`
-
-Will create a 
 
 [mmd]:http://fletcherpenney.net/multimarkdown/
 [jekyll]:http://jekyllrb.com/
