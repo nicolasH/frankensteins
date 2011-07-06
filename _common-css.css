@@ -1,0 +1,27 @@
+/* @override http://127.0.0.1/~niko/frankensteins/blog/common-css.css */
+
+html{
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin:-0px;
+	padding: -0px;
+	/*background-color: #ddd;*/
+	/*background-image: url(img/diag.png);*/
+}
+
+body {
+	margin: -0px;
+	padding: -0px;
+	font-family: "Helvetica Neue", Helvetica, Geneva, Arial, sans-serif;
+	font-size: 1em;
+	line-height: 1.6em;
+	background-color: whitesmoke;
+}
+
+div.nav {
+	width: 900px;
+	margin: -0px auto;
+	list-style: none outside;
+	padding: 0;
+	overflow: hidden;
+	height: 4em;
+}

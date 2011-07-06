@@ -1,4 +1,6 @@
-<!-- This will be prepended between the title and the list of posts -->
 </title>
+<!-- This will be prepended between the title and the list of posts -->
+<link rel="stylesheet" type="text/css" href="common-css.css">
 </head>
 <body>
+<div class="content">
