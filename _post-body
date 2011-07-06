@@ -1,8 +1,10 @@
+- My Blog Name Goes Here
 </title>
 <!-- This will be prepended to each of the post's content -->
 <link rel="stylesheet" type="text/css" href="../../../common-css.css">
 </head>
 <body>
+<div class="content">
 <div class="nav">
      <a href="../../../">Posts List</a>
      <a href="../../../../">Home</a>
