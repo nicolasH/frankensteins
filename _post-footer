@@ -1,6 +1,6 @@
 <!-- this will be appended to the post html file -->
-</div>
-</div>
-<div class="copy">This blog brought to you by ___ , available at <a href="https://github.com/nicolasH/frankensteins/">https://github.com/nicolasH/frankensteins/</a> </div>
+</div><!-- closes the "post" div -->
+</div><!-- closes the "content" div --> 
+<div class="copy">This blog brought to you by ___ , available at <a href="https://github.com/nicolasH/frankensteins/">https://github.com/nicolasH/frankensteins/</a></div>
 </body>
 </html>

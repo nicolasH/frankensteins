@@ -4,8 +4,6 @@ html{
 	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	margin:-0px;
 	padding: -0px;
-	/*background-color: #ddd;*/
-	/*background-image: url(img/diag.png);*/
 }
 
 body {
@@ -39,15 +37,20 @@ body {
 	margin: -0px auto;
 	overflow: hidden;
 }
+
 .post{
 	
+
 }
+
 .index {
 	border-top: 1px solid darkgray;
 	padding: 2em 0em 1em 0em;
 }
+
 .copy{
 	padding: 5em 0em 5em 0em;
 	text-align: center;
 	font-size: 0.8em;
+        display:hidden;
 }

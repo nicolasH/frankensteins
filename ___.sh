@@ -2,7 +2,7 @@
 
 if [ "$1" = "init" ];then
     echo "        init : Creates the blog directory and copies all the 'templates' files (_files) there."
-    mkdir blog; ls _*-* | sed 's:_\(.*\):cp _\1 blog/\1:'| bash
+    mkdir blog; ls _*-* | sed 's:_\(.*\):mv _\1 blog/\1:'| bash
     echo "You can now add the 'blog' directory to a git repository and save it."
     exit
 fi
