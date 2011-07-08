@@ -1,8 +1,0 @@
-<html>
-<head>
-<!-- bellow the <title> tag will be appended either :
-     - the first line of the post file (without any #) & the post-body
-     file.
-     - the index-body file.
--->
-<title>
