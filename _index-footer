@@ -1,7 +1,0 @@
-</div> <!-- closes the "index" div -->
-</div> <!-- closes the "content" div -->
-<!-- This will be appended to the list of posts index file -->
-<div class="copy">This blog brought to you by ___ , available at <a href="https://github.com/nicolasH/frankensteins/">https://github.com/nicolasH/frankensteins/</a> </div>
-<!-- you might want to put your analytics script here. -->
-</body>
-</html>

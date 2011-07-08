@@ -28,14 +28,14 @@ if [ "$1" = "gen" ];then
     echo "1 - Creating the year/month/day directories"
     mkdir -p `ls *.md | cut -c 1-10 | sed 's#_#/#g'|sort | uniq`
     echo "2 - Creating the posts"
-    ls *.md|sort -r| sed 's#\(.\{10\}\)\.\(.*\)\.md#echo \1 \1.\2.html >> titles;head -n 1 TK\1.\2.md|sed "s:\#\*::g" >> titles;cat post-header >> \1.\2.html;head -n 1 TK\1.\2.md |sed "s:\#\*::g" >> \1.\2.html;cat post-body >> \1.\2\.html;echo "<div class=\\"date\\">\1</div><a href=\\"\2.html\\"> ">> \1.\2.html;multimarkdown TK\1.\2.md | sed "1 s:>$:></a>:" >> \1.\2\.html;cat post-footer >> \1.\2\.html;#' |sed 's#_#\/#g'|sed 's# TK\(....\)\/\(..\)\/\(..\)\.# \1_\2_\3.#g' | sed 's: \(....\/..\/..\)\.: \1\/:g'|bash
+    ls *.md|sort -r| sed 's#\(.\{10\}\)\.\(.*\)\.md#echo \1 \1.\2.html >> titles;head -n 1 TK\1.\2.md|sed "s:\#\*::g" >> titles;cat post-header >> \1.\2.html;head -n 1 TK\1.\2.md |sed "s:\#\*::g" >> \1.\2.html;cat post-body >> \1.\2\.html;echo "<div class=\\"date\\">\1</div><a href=\\"\2.html\\"> ">> \1.\2.html;multimarkdown TK\1.\2.md | sed "1 s:>$:></a>:" >> \1.\2\.html;cat both-footer >> \1.\2\.html;#' |sed 's#_#\/#g'|sed 's# TK\(....\)\/\(..\)\/\(..\)\.# \1_\2_\3.#g' | sed 's: \(....\/..\/..\)\.: \1\/:g'|bash
     echo "3 - Creating the index"
     cat index-header index-body >> index.html
     ls *.md|sort -r|head -n 1|sed 's#\(....\).\(..\).\(..\).\(.*\).md#echo "<div class=\"date\">\1\/\2\/\3</div><a href=\\"\1\/\2\/\3\/\4.html\\">";multimarkdown \1\_\2\_\3.\4.md|sed "1 s:>$:></a>:"#'|bash >> index.html
     cat index-middle >>index.html
     #Transform the lines of the titles file into the Date Link Title format.
     sed -e :a -e '1,2d; /\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed 's:\(.\{11\}\)\.*\(.*\):\<div class=\"index_item\"\>\1 \&raquo\; <a href\=\"\2\<\/a\>\<\/div\>:'>>index.html
-    cat index-footer >> index.html;rm titles
+    cat both-footer >> index.html;rm titles
     echo "And voila!"
     exit
 fi
