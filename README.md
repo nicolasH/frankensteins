@@ -1,4 +1,6 @@
-## Readme for Frankenstein's 
+## Frankenstein's ___
+
+_By Nicolas Hoibian._
 
 \___.sh : _The answer to your questions about static html blogs in
 42 line of bash (and thousands of lines of C)._
@@ -16,12 +18,13 @@ This software generates a static html blog from markdown compliant
 files. It is similar in aim to [jekyll][] and [hyde][], but with a
 smaller scope and much less elegance.
 
-It is entirely UNIX based. The current version uses [peg-multimarkdown from
-Fletcher Peney][mmd].
+It is entirely UNIX based. The current version uses
+[peg-multimarkdown][mmd] from Fletcher Peney.
 
-It is nameless and horrible assemblage of `bash`, `sed`, `cat`,
-`echo`, `date`, `mkdir` etc... which uses _`bash macros`_ , has no
-option and uses almost no variable.
+It is a nameless, horrible and recursive assemblage of `bash`, `sed`,
+`cat`, `echo`, `date`, `mkdir` etc..., has no option and uses almost
+no variable.
+
 
 ## ___.sh
 
