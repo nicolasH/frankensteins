@@ -2,7 +2,7 @@
 
 _By Nicolas Hoibian._
 
-\___.sh : _The answer to your questions about static html blogs in
+\_\_\_.sh : _The answer to your questions about static html blogs in
 42 line of bash (and thousands of lines of C)._
 
 >_"His limbs were in proportion, and I had selected his features as
@@ -32,7 +32,7 @@ no variable.
 This script generates a `blog/index.html` with the latest post and
 the list of older posts. For each posts (which should be markdown
 files in the `blog/` dir and with named like
-`yyyy\_mm\_dd.Prettyfied-title-here.md`) it will generate an html file
+`yyyy_mm_dd.Prettyfied-title-here.md`) it will generate an html file
 at `yyyy/mm/dd/Prettyfiled-title-here.html`. Each post title will be
 put in a link to itself.
 
@@ -47,7 +47,7 @@ There is a newborn blog using it at [displayator.com](http://www.displayator.com
 3. `___.sh init`
 4. `___.sh new "My First Post"`
 5. `nano blog/2011_11_11.My-First-Post.md`
-6. `emacs blog/\*-\*`
+6. `emacs blog/*-*`
 7. `___.sh gen`
 8. `rsync -r blog user@some.remote.host.net:/home/public/`
 9. you have a blog!
