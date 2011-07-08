@@ -1,27 +1,26 @@
 ## Readme for Frankenstein's 
 
-_The answer to your questions about blogging in 42 line of bash (and
-thousands of lines of C)._
+\_\_\_.sh : _The answer to your questions about static html blogs in
+42 line of bash (and thousands of lines of C)._
 
->_"His limbs were in proportion, and I had selected his features as
-beautiful. Beautiful!--Great God! His yellow skin scarcely covered the
-work of muscles and arteries beneath; his hair was of a lustrous
-black, and flowing; his teeth of a pearly whiteness; but these
-luxuriances only formed a more horrid contrast with his watery eyes,
-that seemed almost of the same colour as the dun white sockets in
-which they were set, his shrivelled complexion and straight black
-lips."_ 
-- Mary Shelley, 'Frankenstein'
+>"His limbs were in proportion, and I had selected his features as
+>beautiful. Beautiful!--Great God! His yellow skin scarcely covered
+>the work of muscles and arteries beneath; his hair was of a lustrous
+>black, and flowing; his teeth of a pearly whiteness; but these
+>luxuriances only formed a more horrid contrast with his watery eyes,
+>that seemed almost of the same colour as the dun white sockets in
+>which they were set, his shrivelled complexion and straight black
+>lips." - Mary Shelley, 'Frankenstein'
 
-The goal of this software is to generate a static html blog from
-markdown compliant files. It is similar in aim to [jekyll][] and
-[hyde][], but with a smaller scope and much less elegance.
+This software generates a static html blog from markdown compliant
+files. It is similar in aim to [jekyll][] and [hyde][], but with a
+smaller scope and much less elegance.
 
-It is mostly UNIX based. The current version uses [peg-multimarkdown from
-Fletcher Peney][mmd]. 
+It is entirely UNIX based. The current version uses [peg-multimarkdown from
+Fletcher Peney][mmd].
 
 It is a nameless and horrible assemblage of bash, sed, cat, echo, date, mkdir
-etc... which uses almost no variable.
+etc... which uses _bash macros_ and almost no variable.
 
 ### First time usage:
 
@@ -30,9 +29,17 @@ etc... which uses almost no variable.
 3. `___.sh init`
 4. `___.sh new "My First Post"`
 5. `nano blog/2011_11_11.1337.My-First-Post.md`
-6. `___.sh gen`
-7. `rsync -r blog --exclude '*.md' user@some.remote.host.net:/home/public/`
-8. you have a blog!
+6. `nano blog/\*-\*`
+7. `___.sh gen`
+8. `rsync -r blog --exclude '*.md' user@some.remote.host.net:/home/public/`
+9. you have a blog!
+
+
+### Help:
+
+`___.sh`
+
+
 
 ### Day to day usage:
 
