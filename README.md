@@ -29,12 +29,12 @@ no variable.
 ## ___.sh
 
 
-This script generates a `blog/index.html` with the latest post and
-the list of older posts. For each posts (which should be markdown
-files in the `blog/` dir and with named like
-`yyyy_mm_dd.Prettyfied-title-here.md`) it will generate an html file
-at `yyyy/mm/dd/Prettyfiled-title-here.html`. Each post title will be
-put in a link to itself.
+This script generates a `blog/index.html` with the latest post and the
+list of 5 previous posts. For each markdown file in the `blog/`
+directory named like `yyyy_mm_dd.Prettyfied-title-here.md`) it will
+create an html file at `yyyy/mm/dd/Prettyfiled-title-here.html`. Each
+post title will be put in a link to itself. It will also generate a
+`blog/archives.html` file which contains a list of all the posts
 
 There is a newborn blog using it at [displayator.com](http://www.displayator.com/blog/).
 
