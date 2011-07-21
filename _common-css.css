@@ -15,6 +15,14 @@ body {
 	background-color: whitesmoke;
 }
 
+
+.content{
+	width: 800px;
+	padding-left: 8em;
+	margin: -0px auto;
+	overflow: hidden;
+}
+
 .nav {
 	width: 900px;
 	margin: -0px auto;
@@ -24,23 +32,39 @@ body {
 	height: 4em;
 }
 
-.date{
-	margin-left: -6em;
-	float: left;
-	font-size: 1.3em;
-	color: #aaa;
+.nav li {
+	display: inline;
+	float: right;
+	padding: 0;
+	margin: 0;
 }
 
-.content{
-	width: 800px;
-	padding-left: 8em;
-	margin: -0px auto;
-	overflow: hidden;
-}
 
-.post{
+div.nav li a
+{
+	text-align: center;
+	display: block;
+	min-width: 45px;
+	padding: 1px 15px 2px 15px;
+	margin: 0;
+	margin-left: -1px;
 	
+}
 
+.date {
+	color: #aaa;	
+}
+.post{
+	margin-top: 2em;
+}
+.post span.date{
+	margin-left: -6em;
+	font-size: 1.3em;
+}
+
+.post h2{
+	display: inline;
+	margin-left: 0.5em;
 }
 
 .index {
@@ -48,9 +72,19 @@ body {
 	padding: 2em 0em 1em 0em;
 }
 
+.index_item span.date{
+	margin-left: -5.5em;
+	font-size: 1em;
+}
+
 .copy{
-	padding: 5em 0em 5em 0em;
+	padding: 5em 0em 1em 0em;
 	text-align: center;
-	font-size: 0.8em;
-        display:hidden;
+	font-size: 0.7em;
+	color: #aaa;
+	margin: -0px auto;
+}
+
+.copy a{
+	color: #aaa;	
 }

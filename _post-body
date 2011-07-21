@@ -1,13 +1,15 @@
-- My Blog Name Goes Here
+- blog for Displayator
 </title>
 <!-- This will be prepended to each of the post's content -->
 <link rel="stylesheet" type="text/css" href="../../../common-css.css">
 </head>
 <body>
-<div class="content">
 <div class="nav">
-     <a href="../../../">Posts List</a>
-     <a href="../../../../">Home</a>
+    <ul>
+        <li><a href="../../../archives.html">blog archives</a></li>
+        <li><a href="../../../">blog index</a></li>
+    </ul>
 </div>
-<div class="post">
-
+<div class="content">
+<h1>My Blog</h1>
+ <div class="post">

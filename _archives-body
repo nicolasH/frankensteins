@@ -1,8 +1,8 @@
-- My Blog Name Goes Here -</title>
+Archives for - My Blog Name Goes Here -</title>
 <!-- This will be prepended between the title and the list of posts -->
 <link rel="stylesheet" type="text/css" href="common-css.css">
 </head>
 <body>
 <div class="content">
-	<h1>My blog</h1>
+	<h1>All my posts</h1>
   <div class="post">
