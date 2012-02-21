@@ -1,4 +1,4 @@
-## Frankenstein's ___
+## Frankenstein's \_\_\_
 
 _By Nicolas Hoibian._
 
@@ -26,7 +26,7 @@ It is a nameless, horrible and recursive assemblage of `bash`, `sed`,
 uses almost no variable.
 
 
-## ___.sh
+## \_\_\_.sh
 
 
 This script generates a `blog/index.html` with the latest post and the
@@ -94,7 +94,7 @@ name. The file name is based on the title of the post you want to
 create and the date when you run the command. The file's first line
 will be the given title.
 
-    echo "$2" >> blog/ # write the given title to the file whose name is being created:
+`echo "$2" >> blog/ ` # write the given title to the file whose name is being created:
 
 - the date:
 `date +%Y_%m_%d.`:  Generates the date in an `ls` friendly format, e.g, `2011_12_31`
