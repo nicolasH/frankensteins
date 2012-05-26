@@ -123,9 +123,9 @@ So the final name is :
 
 ### `gen` command
 
-This command cleans up then generates the html version of each blog posts, the blog home page and the archive of each posts.
+This command cleans up then generates the html version of each blog posts, the blog home page and the archive of each posts. Here are each steps of this command explained.
 
-#### 0 cleanup/directory creation
+#### \#0 cleanup/directory creation
 
 To generate the dates directory structure, the year, month and day are
 read from each file.
@@ -138,7 +138,6 @@ To cleanup, each year for which there are post is removed:
     cut -c 1-4 |      # the first 4 caracters of their file name
     sort |            # sorted
     uniq`;            # filtered so we only keep each year
-
     rm index.html archives.html # also generated files
 
 To prepare the directories, the directories that will contain each blog post are created:
@@ -152,6 +151,7 @@ To prepare the directories, the directories that will contain each blog post are
     |sort | uniq`     # sorted and filtered so we only keep each day for which
                       # there is a post
 
+#### \#1 Generate each individual post files
 
 To create the html version of the posts, a (rather complex) command is generated for each post.
 
@@ -176,8 +176,10 @@ To create the html version of the posts, a (rather complex) command is generated
         cat both-footer >> \1.\2\.html;#' |# Add the page bottom the post html file (*)
     sed 's#_#\/#g'|                        # Correct the previous occurences of the post file name by replacing _ by /
         sed 's# TK\(....\)\/\(..\)\/\(..\)\.# \1_\2_\3.#g' | # correct the corrected occurences of the markdown filename back to their file location
-        sed 's: \(....\/..\/..\)\.: \1\/:g'| # for the html files, replace the dot between the day and the clean title by a /
-    bash     # and then run the previous text as if it was some correct sequence of commands.
+        sed 's: \(....\/..\/..\)\.: \1\/:g' # for the html files, replace the dot between the day and the clean title by a /
+    |bash     # and then run the previous text as if it was some correct sequence of commands.
+
+#### \#2 Generate the index page
 
 The index page of the blog will contain the last post and links to the previous 5 posts.
 
@@ -188,8 +190,8 @@ First, lets create the latest post part:
     sed 's#\(....\).\(..\).\(..\).\(.*\).md#                   # get the all the components from the file name and replace them by the following text:
         echo "<span class=\"date\">\1\/\2\/\3</span> <a href=\\"\1\/\2\/\3\/\4.html\\">"; # echo the date element and the link to the post file
         multimarkdown \1\_\2\_\3.\4.md|                        # The html version of the post
-        sed "1 s:>$:></a>:"#'                                  # Close the tag for the tile
-        |bash >> index.html                                    # Execute the previous text as if it was a command
+        sed "1 s:>$:></a>:"#'                                  # Close the tag for the title
+        |bash >> index.html                                    # Execute the previous text as if it was a command and write its output to the index.html.
     cat index-middle >>index.html                              # Add the separator between the post and the links to the previous five posts
 
 Then add the links to the 5 preceding posts
@@ -204,6 +206,8 @@ Then add the links to the 5 preceding posts
                     <a href\=\"\2\<\/a\>                         #
                 </span>\<\/div\>:'>>index.html                   # and send all that to the index file
     cat both-footer >> index.html                                # close the index file
+
+#### \#3 Generate the archive 
 
 Then lets create the archive page, which will contain a link to every post ever published:
 
@@ -221,6 +225,8 @@ Transform all the lines of the titles file into the Date Link Title format.
                 <a href\=\"\2\<\/a\>                           # - A link to the post
             </span>\<\/div\>:'>> archives.html
     cat both-footer >> archives.html #;rm titles
+
+The RSS fed is generated in a similar way to each posts, just with less `cat` of html files.
 
 More explanations later.
 
