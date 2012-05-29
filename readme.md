@@ -1,8 +1,8 @@
-## Frankenstein's \_\_\_
+## Frankenstein's \_\_\_.sh
 
 _By Nicolas Hoibian._
 
-\_\_\_ : _The answer to your questions about static html blogs in
+\_\_\_.sh : _The answer to your questions about static html blogs in
 42 line of bash (and thousands of lines of C)._
 
 >_"His limbs were in proportion, and I had selected his features as
@@ -26,7 +26,7 @@ It is a nameless, horrible and recursive assemblage of `bash`, `sed`,
 uses almost no variable.
 
 
-## \_\_\_
+## \_\_\_.sh
 
 
 This script generates a `blog/index.html` with the latest post and the
@@ -44,11 +44,11 @@ There is a newborn blog using it at [displayator.com](http://www.displayator.com
 
 1. install [multimarkdown][mmd].
 2. clone _frankensteins_ to some directory.
-3. `___ init`
+3. `___.sh init`
 6. `Emacs blog/*-*` # to edit the templates with your details
-4. `___ new "My First Post"`
+4. `___.sh new "My First Post"`
 5. `nano blog/2011_11_11.My-First-Post.md`
-7. `___ gen`
+7. `___.sh gen`
 8. `rsync -r blog --exclude '*.md' user@some.remote.host.net:/home/public/`
 9. you have a blog!
 
@@ -56,19 +56,19 @@ There is a newborn blog using it at [displayator.com](http://www.displayator.com
 ### Help:
 
 
-`___ what?`
+`___.sh what?`
 
 or
 
-`___`
+`___.sh`
 
 
 
 ### Day to day usage:
 
-1. `___ new "This is my new post"`
+1. `___.sh new "This is my new post"`
 2. `nano blog/2011_11_11.This-is-my-new-post.md`
-3. `___ gen`
+3. `___.sh gen`
 4. `rsync -r blog --exclude '*.md' user@some.remote.host.net:/home/public/`
 
 
@@ -76,7 +76,7 @@ or
 
 This script *generates* bash commands and execute them. As per
 `bash` inner working:
-- $0 is the name of the script. Should be `___`
+- $0 is the name of the script. Should be `___.sh`
 - $1 is the first parameter given to the script, here the name of the
   command you run: `init`, `new`, `gen` or `clean`.
 - $2 is the second parameter given to the script. It's only used when
