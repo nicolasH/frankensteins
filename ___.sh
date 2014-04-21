@@ -63,11 +63,12 @@ if [ "$1" = "gen" ];then
     cd content/projects; find . -type f -iname '*.blurb' | sed -E 's:.\/(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang:' | bash;
     ls *.lang | sed -E 's:(.*).lang:echo "## \1" >> index.txt; cat \1.lang >> index.txt:'|bash
     cat ../_header.html ../_projects-nav.html > index.html
-    multimarkdown index.txt > index.html
+    multimarkdown index.txt >> index.html
     #cat ../_footer.html; ????
-    find . -type f -iname '*.text'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_projects-nav.html > \1/\2/index.html;echo "\2" >> index.html; cat ../_header.html ../_projects-nav.html >> \1/\2/index.html; multimarkdown \1/\2/\3 >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang;
+    find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; cat ../_projects-nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang;
     cd ../../
     echo "after projects: `pwd`"
+    exit
     echo "7 - Generating notes pages"
     ### Notes
     # into notes/index.html: links to the notes of level 2, individual note pages.
