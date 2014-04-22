@@ -42,7 +42,6 @@ if [ "$1" = "gen" ];then
     ls *.md|sort -r| sed -E 's@(....)-(..)-(..).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
     echo "</channel></rss>" >> feed.xml;rm titles
     cd ../../
-    echo "after blog: `pwd`"
     #echo "And voila!";exit
 
     ### Projects
@@ -60,20 +59,18 @@ if [ "$1" = "gen" ];then
     #   multimarkdown [project].txt >> index.html
     #   cat footer.html > index.html
     echo "6 - Generating the projects pages (missing projects title in projects pages headers)"
-    cd content/projects; find . -type f -iname '*.blurb' | sed -E 's:.\/(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang:' | bash;
+    cd content/projects; find . -type f -iname '*.blurb' | sed -E 's:.\/(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang; echo "" >> \1.lang:' | bash;
     ls *.lang | sed -E 's:(.*).lang:echo "## \1" >> index.txt; cat \1.lang >> index.txt:'|bash
     cat ../_header.html ../_projects-nav.html > index.html
     multimarkdown index.txt >> index.html
-    #cat ../_footer.html; ????
-    find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; cat ../_projects-nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang;
+    find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; cat ../_projects-nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang
     cd ../../
-    echo "after projects: `pwd`"
     exit
     echo "7 - Generating notes pages"
     ### Notes
     # into notes/index.html: links to the notes of level 2, individual note pages.
     # into notes/index.html: level 1 notes inline with title link, individual note pages.
-    cd content/notes;
+    cd content/notes
     echo "in notes: `pwd`"
     # depth 2
     # Find the depth-2 folders, >> name to
