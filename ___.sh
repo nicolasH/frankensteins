@@ -77,17 +77,17 @@ if [ "$1" = "gen" ];then
     find . -type f -iname '*.html' -delete;
     cat ../_header.html > index.html ; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
 
-    # in each folder, create an eponymous file that contains link (with title) to the folder's notes
-    find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<div class=\\"note\\"><h2><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></h2>">> \1/\1.index;:'| bash
+    # in each folder, create an eponymous file that contains links (with title) to the folder's notes
+    find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<span class=\\"title\\"><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></span>">> \1/\1.index;:'| bash
 
     # put these header files into the notes/index.html file
-    find . -type f -iname '*.index' | cut -d '/' -f 2- | sed -E 's:(.+)/(.+).index:echo "<div class=\"note_folder\"><a href=\"\1/">\2</a>">> index.html; cat \1/\2.index >>index.html; echo "</div>" >> index.html:'| bash
+    find . -type f -iname '*.index' | cut -d '/' -f 2- | sed -E 's:(.+)/(.+).index:echo "<div class=\\"note folder\\"><a href=\\"\1/\\">\2</a>">> index.html; cat \1/\2.index >>index.html; echo "</div>" >> index.html:'| bash
 
     # In each directory, create an index.html with the directory title and the basic head.
     find . -type d -mindepth 1| cut -d '/' -f 2-| sed -E 's:(.+):cat ../_header.html > \1/index.html; sed "s%notes nohl%notes highlighted%" ../_nav.html>> \1/index.html ; echo "<div class=\\"note_folder\\"><h2><a href=\\"/notes/\1/\\">\1</a></h2>">>\1/index.html:'| bash
 
     # generate the individual notes in the sub-"notes" folders
-    find . -type f -mindepth 2 -iname '*.md' |  cut -d '/' -f 2- |sed -E 's:(.+)/(.+).md:echo "<div class=\"note_folder\"><a href=\"/notes/\1\">\1</a></div><div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/\2.html;head -n 1 \1/\2.md >> \1/\2.html; echo "</a></h2>">> \1/\2.html;  sed -e "1d" \1/\2.md > tmp.txt; multimarkdown tmp.txt >> \1/\2.html;echo "</div>" >> \1/\2.html ; cat ../_footer.html >> \1/\2.html:'| bash
+    find . -type f -mindepth 2 -iname '*.md' |  cut -d '/' -f 2- |sed -E 's:(.+)/(.+).md:cat ../_header.html > \1/\2.html; sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html; echo "<div class=\"note_folder\"><a href=\"/notes/\1\">\1</a></div><div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/\2.html;head -n 1 & >> \1/\2.html; echo "</a></h2>">> \1/\2.html;  sed -e "1d" & > tmp.txt; multimarkdown tmp.txt >> \1/\2.html;echo "</div>" >> \1/\2.html ; cat ../_footer.html >> \1/\2.html:'| bash
 
     # Append the notes in the notes folder to the notes index.html
     find . -type f -iname '*.md' -mindepth 2 | sed -E 's:(.+)/(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/index.html;head -n 1 \1/\2.md >> \1/index.html; echo "</a></h2>">> \1/index.html;  sed -e "1d" \1/\2.md > tmp.txt; multimarkdown tmp.txt >> \1/index.html;echo "</div>" >> \1/index.html:'| bash
@@ -96,7 +96,7 @@ if [ "$1" = "gen" ];then
     find . -type f -maxdepth 1 -iname '*.md' | sed -E 's:(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1.html\">">>\1.html;head -n 1 \1.md >> \1.html; echo "</a></h2>">> \1.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> \1.html;echo "</div>" >> \1.html ; cat ../_footer.html >> \1.html:'| bash
 
     # Append the notes in the notes folder to the notes index.html
-    find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1.html\">">>index.html;head -n 1 \1.md >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash
+    find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1.html\">">>index.html;head -n 1 \1.md >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash; cat ../_footer.html >> index.html
     cd ../../
     echo "8 - Generating the homepage"
     # Like notes but without nesting
