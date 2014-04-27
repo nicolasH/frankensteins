@@ -78,7 +78,7 @@ if [ "$1" = "gen" ];then
     cat ../_header.html > index.html ; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
 
     # in each folder, create an eponymous file that contains links (with title) to the folder's notes
-    find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<span class=\\"title\\"><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></span>">> \1/\1.index;:'| bash
+    find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<div><span class=\\"title\\"><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></span></div>">> \1/\1.index;:'| bash
 
     # put these header files into the notes/index.html file
     find . -type f -iname '*.index' | cut -d '/' -f 2- | sed -E 's:(.+)/(.+).index:echo "<div class=\\"note folder\\"><a href=\\"\1/\\">\2</a>">> index.html; cat \1/\2.index >>index.html; echo "</div>" >> index.html:'| bash
