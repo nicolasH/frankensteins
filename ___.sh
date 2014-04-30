@@ -30,12 +30,12 @@ if [ "$1" = "gen" ];then
     ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"date_sep\\"> \&raquo\;</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> index-blog.html
     #cat ../_home-middle.html >>index-blog.html
     # Add the 5 previous posts titles+link to the bottom of the index page:
-    head -n 12 titles | sed -e :a -e '1,2d; /\(\.*\.html\)$/N; s/\n/\"\>/; ta' | sed 's:\(.\{11\}\)\.*\(.*\):\<div class=\\"index_item\\"\><span class=\\"date\">\1</span> <span class=\\"date_sep\\"> \&raquo\;</span> <span class=\\"title\\"><a href\=\"/blog/\2\<\/a\></span>\<\/div\>:'>>index-blog.html
+    head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="date_sep"> \&raquo;</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index-blog.html
     #cat ../_footer.html >> index.html
     echo "4 - Creating the blog archive page"
     cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html
     #Transform all the lines of the titles file into the Date Link Title format.
-    sed -e :a -e '/\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed 's:\(.\{11\}\)\.*\(.*\):\<div class=\"index_item\"\><span class=\"date\">\1</span> <span class=\"date_sep\"> \&raquo\;</span> <span class=\"title\"><a href\=\"\2\<\/a\></span>\<\/div\>:'>> archives.html
+    sed -e :a -e '/\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed -E 's:(.{11}).*(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="date_sep"> &raquo;</span> <span class="title"><a href="\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
     echo "<updated>`date '+%Y/%m/%d %H:%M:%S'`</updated>">> feed.xml;echo "<rights>Copyright © `date '+%Y'`">> feed.xml;finger `whoami`| head -n 1 | sed -E "s|.*Name:(.*)$|\1|">>feed.xml; echo "</rights>" >> feed.xml
