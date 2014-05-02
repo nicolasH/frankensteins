@@ -35,12 +35,12 @@ if [ "$1" = "gen" ];then
     echo "4 - Creating the blog archive page"
     cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html
     #Transform all the lines of the titles file into the Date Link Title format.
-    sed -e :a -e '/\(\.*\.html\)$/N; s/\n/\"\>/; ta' titles | sed -E 's:(.{11}).*(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="date_sep"> &raquo;</span> <span class="title"><a href="\2</a></span></div>:'>> archives.html
+    sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="date_sep"> \&raquo;</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
     echo "<updated>`date '+%Y/%m/%d %H:%M:%S'`</updated>">> feed.xml;echo "<rights>Copyright © `date '+%Y'`">> feed.xml;finger `whoami`| head -n 1 | sed -E "s|.*Name:(.*)$|\1|">>feed.xml; echo "</rights>" >> feed.xml
     ls *.md|sort -r| sed -E 's@(....)-(..)-(..).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
-    echo "</channel></rss>" >> feed.xml;rm titles
+    echo "</channel></rss>" >> feed.xml;
     cd ../../
     #echo "And voila!";exit
 
@@ -81,13 +81,13 @@ if [ "$1" = "gen" ];then
     find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<div><span class=\\"title\\"><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></span></div>">> \1/\1.index;:'| bash
 
     # put these header files into the notes/index.html file
-    find . -type f -iname '*.index' | cut -d '/' -f 2- | sed -E 's:(.+)/(.+).index:echo "<div class=\\"note folder\\"><a href=\\"\1/\\">\2</a>">> index.html; cat \1/\2.index >>index.html; echo "</div>" >> index.html:'| bash
+    find . -type f -iname '*.index' | cut -d '/' -f 2- | sed -E 's:(.+)/(.+).index:echo "<div class=\\"folder\\"><h1><a href=\\"\1/\\">\2/</a></h1>">> index.html; cat \1/\2.index >>index.html; echo "</div>" >> index.html:'| bash
 
     # In each directory, create an index.html with the directory title and the basic head.
-    find . -type d -mindepth 1| cut -d '/' -f 2-| sed -E 's:(.+):cat ../_header.html > \1/index.html; sed "s%notes nohl%notes highlighted%" ../_nav.html>> \1/index.html ; echo "<div class=\\"note_folder\\"><h2><a href=\\"/notes/\1/\\">\1</a></h2>">>\1/index.html:'| bash
+    find . -type d -mindepth 1| cut -d '/' -f 2-| sed -E 's:(.+):cat ../_header.html > \1/index.html; sed "s%notes nohl%notes highlighted%" ../_nav.html>> \1/index.html ; echo "<div class=\\"folder\\"><h1><a href=\\"/notes/\1/\\">\1/</a></h1>">>\1/index.html:'| bash
 
     # generate the individual notes in the sub-"notes" folders
-    find . -type f -mindepth 2 -iname '*.md' |  cut -d '/' -f 2- |sed -E 's:(.+)/(.+).md:cat ../_header.html > \1/\2.html; sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html; echo "<div class=\"note_folder\"><a href=\"/notes/\1\">\1</a></div><div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/\2.html;head -n 1 & >> \1/\2.html; echo "</a></h2>">> \1/\2.html;  sed -e "1d" & > tmp.txt; multimarkdown tmp.txt >> \1/\2.html;echo "</div>" >> \1/\2.html ; cat ../_footer.html >> \1/\2.html:'| bash
+    find . -type f -mindepth 2 -iname '*.md' |  cut -d '/' -f 2- |sed -E 's:(.+)/(.+).md:cat ../_header.html > \1/\2.html; sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html; echo "<div class=\"folder\"><h1><a href=\"/notes/\1\">\1/</a></h1></div><div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/\2.html;head -n 1 & >> \1/\2.html; echo "</a></h2>">> \1/\2.html;  sed -e "1d" & > tmp.txt; multimarkdown tmp.txt >> \1/\2.html;echo "</div>" >> \1/\2.html ; cat ../_footer.html >> \1/\2.html:'| bash
 
     # Append the notes in the notes folder to the notes index.html
     find . -type f -iname '*.md' -mindepth 2 | sed -E 's:(.+)/(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/index.html;head -n 1 \1/\2.md >> \1/index.html; echo "</a></h2>">> \1/index.html;  sed -e "1d" \1/\2.md > tmp.txt; multimarkdown tmp.txt >> \1/index.html;echo "</div>" >> \1/index.html:'| bash
@@ -113,7 +113,6 @@ if [ "$1" = "gen" ];then
     cd content/blog/
     cat ../_header.html > index.html ;  sed "s%blog nohl%blog highlighted%" ../_nav.html>> index.html
     cat index-blog.html ../_footer.html >> index.html
-    ls *.html
     rm index-blog.html
     cd ../../
     echo "10 - Generating single pages"
