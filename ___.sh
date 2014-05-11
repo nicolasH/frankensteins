@@ -123,8 +123,9 @@ if [ "$1" = "gen" ];then
     # _nav.html # (general nav)
     # pages/page.md
     # _footer.html
+    # sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html;
     cd content/pages/
-    ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md >> \1.html ; cat ../_nav.html >> \1.html; sed -e "1d" & > tmp.txt ; multimarkdown tmp.txt >>\1.html; cat ../_footer.html >> \1.html:'|bash
+    ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md | tr -d "#" >> \1.html ; sed "s%\1 nohl%\1 highlighted%" ../_nav.html >> \1.html ; echo "<h2><a href=\"/pages/\1.html\">">>\1.html;head -n 1 & | tr -d "#" >> \1.html; echo "</a></h2>">> \1.html; sed -e "1d" & > tmp.txt ; multimarkdown tmp.txt >>\1.html; cat ../_footer.html >> \1.html:'|bash
     rm home.html
     cd ../../
     exit
