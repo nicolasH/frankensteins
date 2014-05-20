@@ -23,19 +23,19 @@ if [ "$1" = "gen" ];then
     echo "1 - Creating the year/month/day directories"
     mkdir -p `ls *.md | cut -c 1-10 | sed 's#\-#/#g'|sort | uniq`
     echo "2 - Creating the posts"
-    ls *.md|sort -r| sed -E 's!(....)-(..)-(..).(.*).md!echo \1/\2/\3 \1/\2/\3/\4.html >> titles;head -n 1 & |tr -d "#" >> titles;cat ../_header.html >> \1/\2/\3/\4.html;head -n 1 & |tr -d "#" >> \1/\2/\3/\4.html; echo " - Blog" >> \1/\2/\3/\4.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> \1/\2/\3/\4.html;echo "<span class=\\"date\\">\1/\2/\3</span>  <span class=\\"date_sep\\"> \&raquo\;</span> <span class=\\"title\\"><a href=\\"/blog/\1/\2/\3/\4.html\\"> ">> \1/\2/\3/\4.html;multimarkdown & | sed "1 s:>$:></a></span>:" >> \1/\2/\3/\4.html;cat ../_blog-footer.html ../_footer.html >> \1/\2/\3/\4.html;!' | bash
+    ls *.md|sort -r| sed -E 's!(....)-(..)-(..).(.*).md!echo \1/\2/\3 \1/\2/\3/\4.html >> titles;head -n 1 & |tr -d "#" >> titles;cat ../_header.html >> \1/\2/\3/\4.html;head -n 1 & |tr -d "#" >> \1/\2/\3/\4.html; echo " - Blog" >> \1/\2/\3/\4.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> \1/\2/\3/\4.html;echo "<div class=\\"post\\"><span class=\\"date\\">\1/\2/\3</span><span class=\\"title\\"><a href=\\"/blog/\1/\2/\3/\4.html\\"> ">> \1/\2/\3/\4.html;multimarkdown & | sed "1 s:>$:></a></span>:" >> \1/\2/\3/\4.html;echo "</div>" >> \1/\2/\3/\4.html;cat ../_blog-footer.html ../_footer.html >> \1/\2/\3/\4.html;!' | bash
     echo "3 - Creating the blog home page"
     cat ../_header.html > index.html; echo "Blog" >> index.html; sed "s%blog nohl%blog highlighted%" ../_nav.html >> index.html
     # Adding the latest post to the index page:
-    ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"date_sep\\"> \&raquo\;</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> index.html
+    ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> index.html
     cat ../_blog-sep.html >>index.html
     # Add the 5 previous posts titles+link to the bottom of the index page:
-    head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="date_sep"> \&raquo;</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index.html; cat ../_blog-footer.html ../_footer.html >> index.html
+    head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index.html; cat ../_blog-footer.html ../_footer.html >> index.html
 
     echo "4 - Creating the blog archive page"
     cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html; echo "<h2>Archives</h2>" >> archives.html
     #Transform all the lines of the titles file into the Date Link Title format.
-    sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="date_sep"> \&raquo;</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
+    sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
 
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
@@ -111,11 +111,11 @@ if [ "$1" = "gen" ];then
     # pages/index.md
     # last blog post
     # footer
-    cd content; cat _header.html _nav.html > index.html; multimarkdown pages/home.md >> index.html
-    cd blog; ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"date_sep\\"> \&raquo\;</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> ../index.html;
+    cd content; cat _header.html > index.html; head -n 1 pages/home.md >> index.html; cat _nav.html >> index.html; sed -e "1d" pages/home.md |  multimarkdown >> index.html
+    cd blog; ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> ../index.html;
     cat ../_blog-sep.html >> ../index.html
-    head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="date_sep"> \&raquo;</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>../index.html
-    cat ../_footer.html >> ../index.html
+    head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>../index.html
+    cat ../_blog-footer.html ../_footer.html >> ../index.html
     cd ../../
     echo "10 - Generating single pages"
     ### Colophon etc...
