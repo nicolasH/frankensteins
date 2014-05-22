@@ -15,6 +15,10 @@ body {
 	line-height: 1.6em;
 	background-color: whitesmoke;
 }
+#banner{
+	font-size: 40px;
+}
+
 #wrapper{
 	width: 800px;
 	margin: -0px auto;
@@ -26,15 +30,14 @@ body {
 	margin: -0px auto;
 	overflow: hidden;
 }
-/*.nav {
-	width: 900px;
-	margin: -0px auto;
-	list-style: none outside;
-	padding: 0;
-	overflow: hidden;
-	height: 4em;
-}*/
-
+a{
+ 	color: darkblue;
+ 	text-decoration: none;
+}
+a:hover{
+	text-decoration: underline;
+}
+ 
 .nav li {
 	display: inline;
 	float: right;
@@ -57,23 +60,19 @@ body {
 .date {
 	color: #aaa;	
 }
-.post{
+/*.post{
 	margin-top: 2em;
-}
-.post span.date{
+}*/
+/*.post span.date{
 	margin-left: -6em;
 	font-size: 1.3em;
-}
+}*/
 
-.post h2{
+/*.post h2{
 	display: inline;
 	margin-left: 0.5em;
-}
+}*/
 
-.index {
-	border-top: 1px solid darkgray;
-	padding: 2em 0em 1em 0em;
-}
 
 .index_item{
 	/* for the dates to show */
@@ -93,14 +92,15 @@ div.content span.date::after{
 	content: "-";	
 }
 
-.copy{
-	padding: 5em 0em 1em 0em;
+#footer{
+	padding: 1em 0em 1em 0em;
 	text-align: center;
 	font-size: 0.7em;
 	color: #aaa;
 	margin: -0px auto;
 }
 
-.copy a{
-	color: #aaa;	
+#footer a{
+text-decoration: none;
+	color: #888;
 }
