@@ -31,50 +31,27 @@ if [ "$1" = "gen" ];then
     cat ../_blog-sep.html >>index.html
     # Add the 5 previous posts titles+link to the bottom of the index page:
     head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index.html; cat ../_blog-footer.html ../_footer.html >> index.html
-
     echo "4 - Creating the blog archive page"
     cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html; echo "<h2>Archives</h2>" >> archives.html
     #Transform all the lines of the titles file into the Date Link Title format.
     sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
-
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
     echo "<updated>`date '+%Y/%m/%d %H:%M:%S'`</updated>">> feed.xml;echo "<rights>Copyright © `date '+%Y'`">> feed.xml;finger `whoami`| head -n 1 | sed -E "s|.*Name:(.*)$|\1|">>feed.xml; echo "</rights>" >> feed.xml
     ls *.md|sort -r| sed -E 's@(....)-(..)-(..).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
     echo "</channel></rss>" >> feed.xml;
     cd ../../
-    #echo "And voila!";exit
 
-    ### Projects
-
-    # blurbs into [language].txt
-    # [language].txt into index.txt
-    # cat ../projects.html > index.html
-    # multimarkdown index.txt >> index.html
-    # cat ../footer.html >> index.html
-    #
-    # for each project
-    #   cat projects.html > index.html
-    #   echo "[project]" > index.html
-    #   cat top.html > index.html
-    #   multimarkdown [project].txt >> index.html
-    #   cat footer.html > index.html
     echo "6 - Generating the projects pages"
     cd content/projects; find . -type f -iname '*.blurb' | sed -E 's:.\/(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang; echo "" >> \1.lang:' | bash;
     ls *.lang | sed -E 's:(.*).lang:echo "## \1" >> index.txt; cat \1.lang >> index.txt:'|bash
     cat ../_header.html > index.html; echo "Projects" >> index.html;  sed "s%projects nohl%projects highlighted%" ../_nav.html>> index.html
     multimarkdown index.txt >> index.html; cat ../_footer.html >> index.html
-
     find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; sed "s%projects nohl%projects highlighted%" ../_nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang
     cd ../../
+
     echo "7 - Generating notes pages"
-    ### Notes
-    # into notes/index.html: links to the notes of level 2, individual note pages.
-    # into notes/index.html: level 1 notes inline with title link, individual note pages.
     cd content/notes
-    # depth 2
-    # Find the depth-2 folders, >> name to
-    # find directories and write the title of their content to a dirname.index file
     find . -type f -iname '*.index' -delete;
     find . -type f -iname '*.html' -delete;
     cat ../_header.html > index.html ; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
@@ -93,6 +70,7 @@ if [ "$1" = "gen" ];then
 
     # Append the notes in the notes folder to the notes index.html
     find . -type f -iname '*.md' -mindepth 2 | sed -E 's:(.+)/(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1/\2.html\">">>\1/index.html;head -n 1 \1/\2.md >> \1/index.html; echo "</a></h2>">> \1/index.html;  sed -e "1d" \1/\2.md > tmp.txt; multimarkdown tmp.txt >> \1/index.html;echo "</div>" >> \1/index.html:'| bash
+
     # Append the footer to the subfolder index pages.
     find . -type f -iname '*index.html' -mindepth 2 | sed -E "s:(.*): cat ../_footer.html >> &:" |bash
 
@@ -102,28 +80,16 @@ if [ "$1" = "gen" ];then
     # Append the notes in the notes folder to the notes index.html
     find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:(.+).md:echo "<div class=\"note\"><h2><a href=\"/notes/\1.html\">">>index.html;head -n 1 & >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash; cat ../_footer.html >> index.html
     cd ../../
+
     echo "8 - Generating the homepage"
-    # Like notes but without nesting
-    #
-    ### Index:
-    # _header.html
-    # _nav.html # (general nav)
-    # pages/index.md
-    # last blog post
-    # footer
     cd content; cat _header.html > index.html; head -n 1 pages/home.md >> index.html; cat _nav.html >> index.html; sed -e "1d" pages/home.md |  multimarkdown >> index.html
     cd blog; ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..).(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> ../index.html;
     cat ../_blog-sep.html >> ../index.html
     head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>../index.html
     cat ../_blog-footer.html ../_footer.html >> ../index.html
     cd ../../
+
     echo "10 - Generating single pages"
-    ### Colophon etc...
-    # _header.html
-    # _nav.html # (general nav)
-    # pages/page.md
-    # _footer.html
-    # sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html;
     cd content/pages/
     ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md | tr -d "#" >> \1.html ; sed "s%\1 nohl%\1 highlighted%" ../_nav.html >> \1.html ; echo "<h2><a href=\"/pages/\1.html\">">>\1.html;head -n 1 & | tr -d "#" >> \1.html; echo "</a></h2>">> \1.html; sed -e "1d" & > tmp.txt ; multimarkdown tmp.txt >>\1.html; cat ../_footer.html >> \1.html:'|bash
     rm home.html
@@ -131,14 +97,4 @@ if [ "$1" = "gen" ];then
     exit
 fi
 
-
 echo "usage : ___.sh init new [title] clean gen";cat ___.sh | grep "echo \" " |bash
-
-##############
-# todo : rename each project.text into index.text
-# then I can transform each non-blog file into its html version based on content/[dir]/whatever/file.text
-
-# find . -type f -iname '*.text'| grep -v '^./blog/' | sed -E 's:./([^/]+)/(.*).text:\1 \2:'
-##############
-
-# Blog post:

@@ -239,3 +239,60 @@ BY-NA-SA. Have fun.
 [jekyll]:http://jekyllrb.com/
 [hyde]:http://ringce.com/hyde
 [frank]:http://www.literature.org/authors/shelley-mary/frankenstein/chapter-05.html
+
+
+
+
+    #echo "And voila!";exit
+
+    ### Projects
+
+    # blurbs into [language].txt
+    # [language].txt into index.txt
+    # cat ../projects.html > index.html
+    # multimarkdown index.txt >> index.html
+    # cat ../footer.html >> index.html
+    #
+    # for each project
+    #   cat projects.html > index.html
+    #   echo "[project]" > index.html
+    #   cat top.html > index.html
+    #   multimarkdown [project].txt >> index.html
+    #   cat footer.html > index.html
+
+
+    ### Notes
+    # into notes/index.html: links to the notes of level 2, individual note pages.
+    # into notes/index.html: level 1 notes inline with title link, individual note pages.
+    cd content/notes
+    # depth 2
+    # Find the depth-2 folders, >> name to
+    # find directories and write the title of their content to a dirname.index file
+    find . -type f -iname '*.index' -delete;
+    find . -type f -iname '*.html' -delete;
+    cat ../_header.html > index.html ; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
+
+    # Like notes but without nesting
+    #
+    ### Index:
+    # _header.html
+    # _nav.html # (general nav)
+    # pages/index.md
+    # last blog post
+    # footer
+
+    ### Colophon etc...
+    # _header.html
+    # _nav.html # (general nav)
+    # pages/page.md
+    # _footer.html
+    # sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html;
+
+##############
+# todo : rename each project.text into index.text
+# then I can transform each non-blog file into its html version based on content/[dir]/whatever/file.text
+
+# find . -type f -iname '*.text'| grep -v '^./blog/' | sed -E 's:./([^/]+)/(.*).text:\1 \2:'
+##############
+
+# Blog post:
