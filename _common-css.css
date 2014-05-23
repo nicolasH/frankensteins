@@ -60,20 +60,10 @@ a:hover{
 .date {
 	color: #aaa;	
 }
-/*.post{
-	margin-top: 2em;
-}*/
-/*.post span.date{
-	margin-left: -6em;
-	font-size: 1.3em;
-}*/
 
-/*.post h2{
+.title h2{
 	display: inline;
-	margin-left: 0.5em;
-}*/
-
-
+}
 .index_item{
 	/* for the dates to show */
 	margin-left: 100px;
