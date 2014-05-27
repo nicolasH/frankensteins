@@ -363,6 +363,10 @@ BY-NA-SA. Have fun.
 [frank]:http://www.literature.org/authors/shelley-mary/frankenstein/chapter-05.html
 
 
+---
+
+Stray notes culled from ___.sh
+
 
 
     #echo "And voila!";exit
@@ -410,11 +414,7 @@ BY-NA-SA. Have fun.
     # _footer.html
     # sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1/\2.html;
 
-##############
-# todo : rename each project.text into index.text
-# then I can transform each non-blog file into its html version based on content/[dir]/whatever/file.text
+todo : rename each project.text into index.text
+then I can transform each non-blog file into its html version based on content/[dir]/whatever/file.text
 
-# find . -type f -iname '*.text'| grep -v '^./blog/' | sed -E 's:./([^/]+)/(.*).text:\1 \2:'
-##############
-
-# Blog post:
+find . -type f -iname '*.text'| grep -v '^./blog/' | sed -E 's:./([^/]+)/(.*).text:\1 \2:'
