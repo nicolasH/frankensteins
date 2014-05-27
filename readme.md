@@ -2,8 +2,8 @@
 
 _By Nicolas Hoibian._
 
-\_\_\_.sh : _The answer to your questions about static html blogs in
-42 line of bash (and thousands of lines of C)._
+\_\_\_.sh : _The answer to your questions about static html sites in
+-42- 82  line of bash (and thousands of lines of C)._
 
 >_"His limbs were in proportion, and I had selected his features as
 >beautiful. Beautiful!--Great God! His yellow skin scarcely covered
@@ -14,9 +14,9 @@ _By Nicolas Hoibian._
 >which they were set, his shrivelled complexion and straight black
 >lips."_ - Mary Shelley, '[Frankenstein][frank]'
 
-This software generates a static html blog from markdown compliant
-files. It is similar in aim to [jekyll][] and [hyde][], but with a
-smaller scope and much less elegance.
+This software generates a static html site from markdown files. It is
+similar in aim to [jekyll][] and [hyde][], but with a smaller scope
+and much less elegance.
 
 It is entirely UNIX based. The current version uses
 [peg-multimarkdown][mmd] from Fletcher Peney.
@@ -29,7 +29,129 @@ uses almost no variable.
 ## \_\_\_.sh
 
 
-This script generates a `blog/index.html` with the latest post and the
+This script generates a website from a set of Markdown files. It transform the files into HTML pages in 4 (+1) different ways depending on which folder the files are in. In general, each transformed page will consist of concatenating the `_header.html`, `_nav.html`, content and `_footer.html` together into a single html page. The content is usually the result of a markdown to html conversion, surrounded with some specific transformations, which are slightly different for each folder.
+
+**In the _blog_ folder**, the files should be named `yyyy-mm-dd.hhmm.this-is-the-title.md`. You can create a blog file empty but for the title using the `___.sh new "This is the title"`. They will be transformed into individual post at `yyyy/mm/dd/hhmm.this-is-the-title.html`. An `archive.html` page will also be generated, containing a list of all the blog posts, most recent first. A full text RSS feed will also be generated containing all the posts. In the blog/ directory, an `index.html` will be generated, containing the last post as well as links to the 5 previous posts. The latest blog post and links to the 5 previous ones will also appear on the front page.
+
+**In the _notes_ folder**, the files can be organized in as many folders as you want, but sub-folders will not be taken into account (notes/bla/this.md will be used, but not notes/bla/bla/that.md). The notes will be transformed into their html version. There will also be an index.html file which will contain the full text of the notes in the current folder. In the notes folder, the list of notes in folders will appear at the top of the page.
+
+**In the _projects_ folder**, the minimum folder depth should be two (`projects/category/project1`). In each project folder, the script looks for a `project1/project1.blurb` and a `project1/project1.md` file. All a category's blurb file will be assembled onto the top-level projects index page (`projects/index.html`), and the individual projects `.md` file will be transformed into an index.html page in the project folder.
+
+**In the _pages_ folder**, the `.md` files will be transformed into `.html` file. If there is a `home.md` file, it will be used to create the site home page (it will appear above the latest blog post). Sub-folders are not supported.
+
+
+### Implementation details
+
+#### Blog
+
+You can use `___.sh new "A new beginning!"` to create a file (named, say `2014-07-07.0707.A-new-beginning.md`) in the blog folder that will contain the title. It will be named using the date, and most special characters will be removed from the file name (but not the title).
+
+Generation phase: When the `___.sh gen` is invoked, all the blog posts will be transformed into htnl pages, in a YYYY/MM/DD/HHMM.The-Title-Of-The-Post.html file. The latest post will also be used to create an index.html in the blog folder. The titles and links to each post will be part of the archive.html page, and the last five titles and links will be added to the end of the index.html page. All the posts will also be used to generate a full text blog/feed.xml. 
+
+How each pages are assembled: 
+
+Posts: 
+
+    _header + [first line of blog post] + _nav + [post] + _blog footer + _footer
+
+Index: 
+
+    _header + [first line of latest post] + 'blog' + _nav + [latest post] + _blog-sep + [previous 5 posts] + _blog-footer + _footer
+    
+Archives:
+
+    _header + "Archive" + [titles and leak to all posts] + _footer
+    
+Feed: 
+
+    _feed-top + [every posts]
+
+
+And that's pretty much it.
+
+
+#### Notes
+
+Just write your notes. Each note will be transformed into its html version. Each folder will have an index page with the notes in full text and, for the root `notes` folder, the list of sub-folders and the their notes will appear at the top of the notes/index.html page.
+
+How each pages are assembled:
+
+notes/index.html:
+
+    _header + "Notes" + _nav + [list of sub-folders and their notes titles (as links)] + [each note in the folder] + _footer
+    
+notes/a-single-note.md:
+
+    _header + [note title] + "Notes" + _nav + [content] + _footer
+    
+    
+notes/folder/index.html: 
+
+
+    _header + [folder name]  + "Notes" + _nav + [all the folder's notes] + _footer
+    
+    
+notes/folder/another-note.md:
+
+    _header + [note title] + "Notes" + _nav + [content] + _footer
+    
+    
+#### Projects
+
+Projects were born of the way I arranged mine on my website: `language/projects`. Each project folder contains a project.blurb and a project.md. The blurb are aggregated and arranged below the language name on the Projects page. Each project's markdown file is transformed into an index.html page.
+
+For example, given the following list of projects and languages:
+
+Java/DisplayableCreator/  
+Java/Displayable/  
+Bash/Frankensteins/  
+
+
+The Projects page would look like that:
+
+    _header 
+    "Projects"
+    _nav 
+    
+    Java
+      [DisplayableCreator.blurb]
+      [Displayable.blurb]
+    
+    Bash
+      [Frankenstein.blurb]
+    
+    _footer
+
+
+The DisplayableCreator folder would contain a generated index page:
+
+    _header + [project's title] + "Projects" + _nav + [project.md] + _footer
+    
+
+#### Pages
+
+The pages `.md` files are simply transformed into 
+
+    _header + [page's title] + _nav + [content] + _footer
+    
+Except for a "home.md" page if present (see above).
+
+
+#### \_nav
+
+In the above representation, the nav is transformed so it is possible to highlight the current part of the site the page is in. The default `_nav.html` page contains links with a class that is composed of a name (blog/notes/project) and "nohl". When generating html pages, the class is matched and the "nohl" part is replaced with "highlighted". For notes, blog and projects only notes, blog and projects are looked for. 
+for Pages/bla.md files, the file name is looked for. So if there is a "bla nohl" class in the _nav file, it will become "bla highlighted" in the bla.html page.
+
+
+
+
+------------------------ 
+
+### Old README
+
+
+
+There are three main section `blog/index.html` with the latest post and the
 list of 5 previous posts. For each markdown file in the `blog/`
 directory named like `yyyy_mm_dd.Prettyfied-title-here.md`) it will
 create an html file at `yyyy/mm/dd/Prettyfiled-title-here.html`. Each
