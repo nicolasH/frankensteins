@@ -2,3 +2,5 @@ blog
 content
 .DS_Store
 *~
+.#*
+readme.old.md
