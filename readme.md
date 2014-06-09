@@ -42,7 +42,7 @@ folder.
   `yyyy-mm-dd.hhmm.this-is-the-title.md`. You can create a blog file
   empty but for the title using '`___.sh new "This is the
   title"`'. During the `gen` phase, they will be transformed into
-  individual post at `yyyy/mm/dd/hhmm.this-is-the-title.html`. An
+  individual post at `yyyy/mm/dd/this-is-the-title.html`. An
   `archive.html` page will also be generated, containing a list of all
   the blog posts, most recent first. A full text RSS feed will also be
   generated containing all the posts. In the blog/ directory, an
@@ -85,6 +85,7 @@ There are four commands: `init`, `new`, `clean` and `gen`.
 - `new`
 - `clean`
 - `gen` 
+
 ### Implementation details
 
 _Conventions_:
@@ -111,7 +112,7 @@ characters will be removed from the file name (but not the title).
 
 Generation phase: When `___.sh gen` is invoked, all the blog posts
 will be transformed into html pages, in a
-`YYYY/MM/DD/HHMM.The-Title-Of-The-Post.html` file. The latest post
+`YYYY/MM/DD/The-title-of-the-post.html` file. The latest post
 will also be used to create an `index.html` in the blog folder. The
 titles and links to each post will be part of the `archive.html` page,
 and the last five titles and links will be added to the end of the
