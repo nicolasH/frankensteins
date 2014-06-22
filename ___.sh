@@ -50,7 +50,8 @@ if [ "$1" = "gen" ];then
     echo "7 - Generating notes pages"
     cd content/notes
     find . -type f -iname '*.index' -delete; find . -type f -iname '*.html' -delete;
-    cat ../_header.html > index.html ; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
+    # Begin the notes/index.html page
+    cat ../_header.html > index.html ; echo "Notes" >> index.html; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
     # in each folder, create an eponymous file that contains links (with title) to the folder's notes
     find . -type f -iname '*.md' -mindepth 2| cut -d '/' -f 2-| sed -E 's:(.+)/(.+).md:echo "<div><span class=\\"title\\"><a href=\\"/notes/\1/\2.html\\">">>\1/\1.index;head -n 1 \1/\2.md >> \1/\1.index; echo "</a></span></div>">> \1/\1.index;:'| bash
     # put these header files into the notes/index.html file
@@ -69,7 +70,7 @@ if [ "$1" = "gen" ];then
     find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:./(.+).md:echo "<div class=\\"note\\"><h2><a href=\\"/notes/\1.html\\">">>index.html;head -n 1 & >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash; cat ../_footer.html >> index.html; cd ../../
     # Home page
     echo "8 - Generating the homepage"
-    cd content; cat _header.html > index.html; head -n 1 pages/home.md >> index.html; cat _nav.html >> index.html; sed -e "1d" pages/home.md |  multimarkdown >> index.html
+    cd content; cat _header.html > index.html; head -n 1 pages/home.md | tr -d "#" >> index.html; cat _nav.html >> index.html; sed -e "1d" pages/home.md |  multimarkdown >> index.html
     cd blog; ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..)......(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> ../index.html
     cat ../_blog-sep.html >> ../index.html; head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>../index.html
     cat ../_blog-footer.html ../_footer.html >> ../index.html; cd ../../
