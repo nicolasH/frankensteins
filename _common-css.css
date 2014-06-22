@@ -1,4 +1,5 @@
-/* @override http://127.0.0.1/~niko/frankensteins/blog/common-css.css */
+/* @override http://127.0.0.1/~niko/frankensteins/blog/common-css.css
+	http://127.0.0.1:9001/_common-css.css */
 
 html{
 	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
@@ -14,24 +15,29 @@ body {
 	line-height: 1.6em;
 	background-color: whitesmoke;
 }
+#banner{
+	font-size: 40px;
+}
 
+#wrapper{
+	width: 800px;
+	margin: -0px auto;
+}
 
 .content{
 	width: 800px;
-	padding-left: 8em;
+	padding-left: 1em;
 	margin: -0px auto;
 	overflow: hidden;
 }
-
-.nav {
-	width: 900px;
-	margin: -0px auto;
-	list-style: none outside;
-	padding: 0;
-	overflow: hidden;
-	height: 4em;
+a{
+ 	color: darkblue;
+ 	text-decoration: none;
 }
-
+a:hover{
+	text-decoration: underline;
+}
+ 
 .nav li {
 	display: inline;
 	float: right;
@@ -40,7 +46,7 @@ body {
 }
 
 
-div.nav li a
+.nav li a
 {
 	text-align: center;
 	display: block;
@@ -54,37 +60,37 @@ div.nav li a
 .date {
 	color: #aaa;	
 }
-.post{
-	margin-top: 2em;
-}
-.post span.date{
-	margin-left: -6em;
-	font-size: 1.3em;
-}
 
-.post h2{
+.title h2{
 	display: inline;
-	margin-left: 0.5em;
 }
-
-.index {
-	border-top: 1px solid darkgray;
-	padding: 2em 0em 1em 0em;
+.index_item{
+	/* for the dates to show */
+	margin-left: 100px;
 }
 
 .index_item span.date{
-	margin-left: -5.5em;
-	font-size: 1em;
+	margin-left: -6em;
+	/*font-size: 1em;*/
 }
 
-.copy{
-	padding: 5em 0em 1em 0em;
+div.content span.date::after{
+	content: " »";	
+}
+
+#wrapper div.content div.index_item span.date::after {
+	content: "-";	
+}
+
+#footer{
+	padding: 1em 0em 1em 0em;
 	text-align: center;
 	font-size: 0.7em;
 	color: #aaa;
 	margin: -0px auto;
 }
 
-.copy a{
-	color: #aaa;	
+#footer a{
+text-decoration: none;
+	color: #888;
 }
