@@ -2,8 +2,14 @@
 
 _By Nicolas Hoibian._
 
-\_\_\_.sh : _The answer to your questions about static html sites in
--42- 82  line of bash (and thousands of lines of C)._
+
+__!!!__ This is the 2.0 version, with quite a few changes
+from the previous, blog-only 1.0 . Migrating is
+simple, but manual and mandatory. Details at the bottom.
+
+
+__\_\_\_.sh__ : _The answer to your questions about static html sites in
+42*2 lines of bash (and thousands of lines of C)._
 
 >_"His limbs were in proportion, and I had selected his features as
 >beautiful. Beautiful!--Great God! His yellow skin scarcely covered
@@ -292,8 +298,21 @@ looked for. So if there is `colophon.md` page and a `"colophon nohl"`
 class in the `_nav` file, the class will become `"colophon highlighted"` in the`colophon.html` page.
 
 
---- 
+---
+
+### Migration from 1.0
+
+In 1.0, `___.sh` was generating a blog from a `blog` folder. In 2.0 `___.sh` generates a website, including a blog, from a `content` folder that contains a `blog` folder. Accordingly to switch to 2.0, you will have to:
+
+ 1. update this project 
+ 2. run `___.sh init`  
+ 3. copy you blog posts into content/blog
+ 4. edit the `content/_*` files to taste. Some names and purposes have changed from 1.0 . Don't forget to add a link to the blog xml feed somewhere.
+
+---
 
 Released under the GPL v3
 
 Copyright Nicolas Hoibian 2014
+
+

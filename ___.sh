@@ -48,8 +48,7 @@ if [ "$1" = "gen" ];then
     find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; sed "s%projects nohl%projects highlighted%" ../_nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang; cd ../../
     # Pages
     echo "7 - Generating notes pages"
-    cd content/notes
-    find . -type f -iname '*.index' -delete; find . -type f -iname '*.html' -delete;
+    cd content/notes; find . -type f -iname '*.index' -delete; find . -type f -iname '*.html' -delete;
     # Begin the notes/index.html page
     cat ../_header.html > index.html ; echo "Notes" >> index.html; sed "s:notes nohl:notes highlighted:" ../_nav.html >> index.html;
     # in each folder, create an eponymous file that contains links (with title) to the folder's notes
@@ -67,19 +66,18 @@ if [ "$1" = "gen" ];then
     # generate the individual notes in the "notes" folder
     find . -type f -maxdepth 1 -iname '*.md' | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 & | tr -d "#" >> \1.html ; echo " - Notes" >> \1.html ; sed "s%notes nohl%notes highlighted%" ../_nav.html >> \1.html; echo "<div class=\"note\"><h2><a href=\"/notes/\1.html\">">>\1.html;head -n 1 \1.md >> \1.html; echo "</a></h2>">> \1.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> \1.html;echo "</div>" >> \1.html ; cat ../_footer.html >> \1.html:'| bash
     # Append the notes in the notes folder to the notes index.html
-    find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:./(.+).md:echo "<div class=\\"note\\"><h2><a href=\\"/notes/\1.html\\">">>index.html;head -n 1 & >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash; cat ../_footer.html >> index.html; cd ../../
+    find . -type f -iname '*.md' -maxdepth 1 | sed -E 's:./(.+).md:echo "<div class=\\"note\\"><h2><a href=\\"/notes/\1.html\\">">>index.html;head -n 1 & >> index.html; echo "</a></h2>">> index.html;  sed -e "1d" \1.md > tmp.txt; multimarkdown tmp.txt >> index.html;echo "</div>" >> index.html:' | bash; cat ../_footer.html >> index.html; rm tmp.txt; cd ../../
     # Home page
     echo "8 - Generating the homepage"
     cd content; cat _header.html > index.html; head -n 1 pages/home.md | tr -d "#" >> index.html; cat _nav.html >> index.html; sed -e "1d" pages/home.md |  multimarkdown >> index.html
     cd blog; ls *.md|sort -r|head -n 1|sed -E 's#(....)-(..)-(..)......(.*).md#echo "<span class=\\"date\\">\1\/\2\/\3</span> <span class=\\"title\\"> <a href=\\"/blog/\1\/\2\/\3\/\4.html\\">";multimarkdown &|sed "1 s:>$:></a></span>:"#'|bash >> ../index.html
     cat ../_blog-sep.html >> ../index.html; head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>../index.html
-    cat ../_blog-footer.html ../_footer.html >> ../index.html; cd ../../
+    cat ../_blog-footer.html ../_footer.html >> ../index.html;  cd ../../
     # Plain pages
     echo "9 - Generating single pages"
     cd content/pages/
     ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md | tr -d "#" >> \1.html ; sed "s%\1 nohl%\1 highlighted%" ../_nav.html >> \1.html ; echo "<h2><a href=\"/pages/\1.html\">">>\1.html;head -n 1 & | tr -d "#" >> \1.html; echo "</a></h2>">> \1.html; sed -e "1d" & > tmp.txt ; multimarkdown tmp.txt >>\1.html; cat ../_footer.html >> \1.html:'|bash
-    rm home.html
-    cd ../../
+    rm home.html tmp.txt; cd ../../
     exit
 fi
 
