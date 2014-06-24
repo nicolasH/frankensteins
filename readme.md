@@ -311,8 +311,16 @@ In 1.0, `___.sh` was generating a blog from a `blog` folder. In 2.0 `___.sh` gen
 
 ---
 
-Released under the GPL v3
+### License
+
+I hereby release this 'software' under the Creative Commons
+BY-NA-SA. Have fun.
+
 
 Copyright Nicolas Hoibian 2014
 
 
+[mmd]:http://fletcherpenney.net/multimarkdown/
+[jekyll]:http://jekyllrb.com/
+[hyde]:http://ringce.com/hyde
+[frank]:http://www.literature.org/authors/shelley-mary/frankenstein/chapter-05.html
