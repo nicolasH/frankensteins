@@ -37,7 +37,7 @@ if [ "$1" = "gen" ];then
     cat ../_footer.html >> archives.html
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
     echo "<updated>`date '+%Y/%m/%d %H:%M:%S'`</updated>">> feed.xml;echo "<rights>Copyright © `date '+%Y'`">> feed.xml;finger `whoami`| head -n 1 | sed -E "s|.*Name:(.*)$|\1|">>feed.xml; echo "</rights>" >> feed.xml
-    ls *.md|sort -r| sed -E 's@(....)-(..)-(..)......(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
+    ls *.md|sort -r| head -n 10 | sed -E 's@(....)-(..)-(..)......(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
     echo "</channel></rss>" >> feed.xml; cd ../../
     # Projects
     echo "6 - Generating the projects pages"
