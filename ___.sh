@@ -1,6 +1,7 @@
 #!/bin/bash
+
 if [ "$1" = "init" ];then
-    echo "         init : Creates the content directory and copies all the 'templates' files (_files.html) there."
+    echo "         init : Creates the content directory and copies all the 'templates' files (_*.*) there."
     mkdir -p content/blog content/notes content/projects; cp _*.html _*.xml _*.css content/
     echo "You can now add the 'content' directory to a git repository and save it.";exit
 fi
@@ -16,7 +17,7 @@ if [ "$1" = "clean" ];then
 fi
 
 if [ "$1" = "gen" ];then
-    echo "          gen : Generates the blog"
+    echo "          gen : Generates the blog, notes, projects and standalone pages"
     echo "0 - Removing the generated html files by removing the year directories"
     cd content/blog
     rm -r `ls *.md | cut -c 1-4 | sort | uniq`;rm index.html archives.html titles
@@ -32,12 +33,11 @@ if [ "$1" = "gen" ];then
     head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index.html; cat ../_blog-footer.html ../_footer.html >> index.html
     echo "4 - Creating the blog archive page"
     cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html; echo "<h2>Archives</h2>" >> archives.html
-    #Transform all the lines of the titles file into the Date Link Title format.
+    # Transform all the lines of the titles file into the Date Link Title format.
     sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
-    echo "<updated>`date '+%Y/%m/%d %H:%M:%S'`</updated>">> feed.xml;echo "<rights>Copyright © `date '+%Y'`">> feed.xml;finger `whoami`| head -n 1 | sed -E "s|.*Name:(.*)$|\1|">>feed.xml; echo "</rights>" >> feed.xml
-    ls *.md|sort -r| head -n 10 | sed -E 's@(....)-(..)-(..)......(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>/blog/\1/\2/\3/\4.html</link><pubDate>">>feed.xml;echo "\1/\2/\3 ">> feed.xml ; date -r `stat -f "%m" &` "+%H:%M:%S" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
+    ls *.md|sort -r| head -n 10 | sed -E 's@(....)-(..)-(..).(....).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>" >> feed.xml; sed -n -E "s|^.*xml:base=\\"\(.*\)\\".*$|\\1/blog/\1/\2/\3/\5.html</link><pubDate>|p" ../_feed-top.xml >> feed.xml;date -j -f "%Y/%m/%d %H%M" "\1/\2/\3 \4"  "+%a, %d %b %Y %H:%M:%S %z" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
     echo "</channel></rss>" >> feed.xml; cd ../../
     # Projects
     echo "6 - Generating the projects pages"
