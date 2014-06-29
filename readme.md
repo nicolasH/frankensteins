@@ -88,9 +88,11 @@ There are four commands: `init`, `new`, `clean` and `gen`.
   directory. Once this is done, you do not need to run it again. If
   you do, it will overwrite the templates and the stylesheet.
 
-- `new`
-- `clean`
-- `gen` 
+- `new "some title""` creates a new blog post file based on the date
+  and the given title, empty but for the title.
+- `clean` will remove the generated files and folders.
+- `gen` will generate all the static pages.
+
 
 ### Implementation details
 
