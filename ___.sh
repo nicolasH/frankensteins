@@ -32,7 +32,7 @@ if [ "$1" = "gen" ];then
     # Add the 5 previous posts titles+link to the bottom of the index page:
     head -n 12 titles | sed -E -e :a -e '1,2d; /(.*.html)$/N; s/\n/\"\>/; ta' | sed -E 's:(.{11})(.*):<div class="index_item"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span>\</div>:'>>index.html; cat ../_blog-footer.html ../_footer.html >> index.html
     echo "4 - Creating the blog archive page"
-    cat ../_header.html >> archives.html;sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html; echo "<h2>Archives</h2>" >> archives.html
+    cat ../_header.html >> archives.html;echo "Archives - Blog" >> archives.html; sed "s%blog nohl%blog highlighted%" ../_nav.html >> archives.html; echo "<h2>Archives</h2>" >> archives.html
     # Transform all the lines of the titles file into the Date Link Title format.
     sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
