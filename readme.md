@@ -32,37 +32,47 @@ It is a nameless, horrible and recursive assemblage of `bash`, `sed`,
 uses almost no variable.
 
 
+### Requirements
+
+- [multimarkdown][mmd] in the script's `$PATH`. 
+- `mkdir`, `bash`, `sed`, `cat`, `find`, `echo`, `grep`, `cd`.
+- a `date` command implementation that supports `date -j -f "%Y/%m/%d %H%M" "2014/07/07 1333"  "+%a, %d %b %Y %H:%M:%S %z"` (most likely a BSD/OSX version).
+
+
+
 ## \_\_\_.sh
 
 
-This script generates a website from a set of Markdown files. It
-transform the files into HTML pages in 4 (+1) different ways depending
-on which folder the files are in. In general, each transformed page
-will consist of concatenating the `_header.html`, `_nav.html`, content
-and `_footer.html` together into a single html page. The content is
-usually the result of a markdown to html conversion, surrounded with
-some specific transformations, which are slightly different for each
-folder.
+The script. The only script. It generates a website from a set of
+Markdown files. It transform the files into HTML pages in 4 (+1)
+different ways depending on which folder the files are in. In general,
+each transformed page will consist of concatenating the
+`_header.html`, `_nav.html`, content and `_footer.html` together into
+a single html page. The content is usually the result of a markdown to
+html conversion, surrounded with some specific transformations, which
+are slightly different for each folder.
 
 **In the _blog_ folder**, the files should be named
   `yyyy-mm-dd.hhmm.this-is-the-title.md`. You can create a blog file
   empty but for the title using '`___.sh new "This is the
-  title"`'. During the `gen` phase, they will be transformed into
-  individual post at `yyyy/mm/dd/this-is-the-title.html`. An
-  `archive.html` page will also be generated, containing a list of all
-  the blog posts, most recent first. A full text RSS feed will also be
-  generated containing all the posts. In the blog/ directory, an
-  `index.html` will be generated, containing the last post as well as
-  links to the 5 previous posts. The latest blog post and links to the
-  5 previous ones will also appear on the front page.
+  title"`'. During the `gen` phase, appropriately named markdown files
+  will be transformed into individual post at
+  `yyyy/mm/dd/this-is-the-title.html`. An `archive.html` page will
+  also be generated, containing a list of all the blog posts, most
+  recent first. A full text RSS feed will also be generated containing
+  all the posts. In the _blog/_ directory, an `index.html` will be
+  generated, containing the last post as well as links to the 5
+  previous posts. The latest blog post and links to the 5 previous
+  ones will also appear on the front page.
 
 **In the _notes_ folder**, the files can be organized in as many
   folders as you want, but sub-folders will not be taken into account
-  (notes/bla/this.md will be used, but not notes/bla/bla/that.md). The
-  notes will be transformed into their html version. There will also
-  be an index.html file which will contain the full text of the notes
-  in the current folder. In the notes folder, the list of notes in
-  folders will appear at the top of the page.
+  (_notes/bla/this.md_ will be used, but not
+  _notes/bla/bla/that.md_). The notes will be transformed into their
+  html version. There will also be an `index.html` file which will
+  contain the full text of the notes in the current folder. In the
+  top-level _notes_ folder, the list of notes in it's sub-folders will
+  appear at the top of the page.
 
 **In the _projects_ folder**, the minimum folder depth should be two
   (`projects/category/project1`). In each project folder, the script
@@ -70,11 +80,11 @@ folder.
   file. For each category, the blurb file will be assembled and shown
   on the top-level projects index page (`projects/index.html`), and
   the individual projects `.md` file will be transformed into an
-  index.html page in the project folder.
+  `index.html` page in the project folder.
 
 **In the _pages_ folder**, the `.md` files will be transformed into
-  `.html` file. If there is a `home.md` file, it will be used to
-  create the site home page (it will appear above the latest blog
+  `.html` file. If there is a `home.md` file, it will be used to when
+  creating the site home page (it will appear above the latest blog
   post). Sub-folders are not supported.
 
 
@@ -90,19 +100,13 @@ There are four commands: `init`, `new`, `clean` and `gen`.
 
 - `new "some title""` creates a new blog post file based on the date
   and the given title, empty but for the title.
+
 - `clean` will remove the generated files and folders.
+
 - `gen` will generate all the static pages.
 
 
 ### Implementation details
-
-_Conventions_:
-
-- `_name`: this is one of the template files you have to edit. It
-  should be named `_name.html` in the content folder.
-- `[... post]`: this is content extracted from a markdown file. Either
-  the first line of a file ("_'s title_") or the result of a markdown
-  to html conversion.
 
 
 #### Initial run 
@@ -111,23 +115,35 @@ Please run `___.sh init` so the content folders (content + /blog
 /projects /notes /pages)are created and the template files are moved
 to where they will be used.
 
+_Conventions for assembly description_:
+
+- `_name`: this is one of the template files you have to edit. It
+  should be named `_name.html` in the content folder.
+- `[...]`: this is content extracted from a markdown file. It can be
+  the first line of a file (_it's title_), the result if a markdown
+  to html conversion or the result of some other internal operation.
+- "..." text that appears verbatim in `___.sh`.
+
+
 #### Blog
 
 You can use `___.sh new "A new beginning!"` to create a file (named,
-say `2014-07-07.0707.A-new-beginning.md`) in the blog folder that will
-contain the title. It will be named using the date, and most special
-characters will be removed from the file name (but not the title).
+for example `2014-07-07.0707.A-new-beginning.md`) in the blog folder
+that will contain the title. It will be named using the date, and most
+special characters will be removed from the file name (but not the
+title).
 
 Generation phase: When `___.sh gen` is invoked, all the blog posts
 will be transformed into html pages, in a
-`YYYY/MM/DD/The-title-of-the-post.html` file. The latest post
-will also be used to create an `index.html` in the blog folder. The
-titles and links to each post will be part of the `archive.html` page,
-and the last five titles and links will be added to the end of the
-`index.html` page. All the posts will also be used to generate a full
-text `blog/feed.xml`.
+`YYYY/MM/DD/The-title-of-the-post.html` file (yes, the time is removed
+from the generated post file name). The latest post will also be used
+to create an `index.html` in the blog folder. The titles and links to
+each post will be part of the `archive.html` page, and the last five
+titles and links will be added to the end of the `index.html`
+page. All the posts will also be used to generate a full text
+`blog/feed.xml`.
 
-How each pages are assembled: 
+How each pages are assembled:
 
 Posts: 
 
@@ -241,7 +257,9 @@ The Projects page would look like that (projects/index.html):
     + _nav*
     
     + java**
+    + Displayable**
     + [Displayable.blurb]
+    + DisplayableCreator**
     + [DisplayableCreator.blurb]
 
     + Javascript**
@@ -287,17 +305,19 @@ the root `index.html`.
     + _footer
 
 
-#### \_nav
+#### \_nav*
 
-In the above representation, the nav is transformed so it is possible
-to highlight the current part of the site the page is in. The default
-`_nav.html` page contains links with a class that is composed of a
-name (blog|notes|project) and " nohl". When generating html pages, the
-composite class is matched and the "nohl" part is replaced with
-"highlighted". For _notes_, _blog_ and _projects_ only '_notes_', '_blog_' and
-'_projects_' are looked for.  In the `pages` directory, the file name is
-looked for. So if there is `colophon.md` page and a `"colophon nohl"`
-class in the `_nav` file, the class will become `"colophon highlighted"` in the`colophon.html` page.
+Except for the homepage, everywhere the `_nav` file is used it is
+transformed so it is possible to highlight the current part of the
+site the page is in. The default `_nav.html` page contains links with
+a class that is composed of a name (blog|notes|project) and "
+nohl". When generating html pages, the composite class is matched and
+the "nohl" part is replaced with "highlighted". For _notes_, _blog_
+and _projects_ only '_notes_', '_blog_' and '_projects_' are looked
+for.  In the `pages` directory, the file name is looked for. So if
+there is `colophon.md` page and a `"colophon nohl"` class in the
+`_nav` file, the class will become `"colophon highlighted"` in
+the`colophon.html` page.
 
 
 ---
