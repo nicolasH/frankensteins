@@ -81,4 +81,4 @@ if [ "$1" = "gen" ];then
     exit
 fi
 
-echo "usage : ___.sh init new [title] clean gen";cat ___.sh | grep "echo \" " |bash
+echo "usage : ___.sh init new [title] clean gen";cat ___.sh | grep "echo \" " | grep " : "|bash
