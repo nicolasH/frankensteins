@@ -1,4 +1,76 @@
 <!-- This is where you put the link to the archives. :-/ -->
 (this is in _blog-footer.html)
-<a href="/blog/archives.html">All blog posts</a>
+<div id="blog_nav" style="display:none"></div>
+<a href="/blog/archives.html">All blog posts</a> / <a href="">RSS</a>
+<script lang="javascript">
+   
+  function addBlogNav(e){
+    var myText = oReq.responseText.trim();
+
+    var lines = myText.split("\n");
+    var posts = new Array();
+
+    var docPathName = document.location.pathname;
+    if(docPathName.substring(0, 5) != '/blog' || docPathName == "/blog/archives.html"){
+        return;
+    }else{
+        docPathName = docPathName.substring(6);
+    }
+    //console.log("path", docPathName);
+    var postIndex = -1;
+    var n = 0;
+    for (line in lines){
+        var text = lines[line];
+        if(line % 2){
+            posts[n][2] = text.trim();
+            n += 1;
+        }else{
+            var a = text.split(' ');
+            posts[n] = new Array(a[0],a[1],"");
+            if(a[1] == docPathName){
+                //console.log(n,a[1]);
+                postIndex = n;
+            }
+        }
+    }
+    var nav_links = "";
+    var youngerPostMarker = '&larr; ';
+    var olderPostMarker = '&rarr; ';
+    if(postIndex > -1){ 
+        for(var i=0; i<posts.length; i++ ){
+	    if(i == postIndex - 1){//to younger post
+		// <span class="date">'+posts[i][0] +'</span> 
+		nav_links +='<div class="index_item">'+youngerPostMarker+'<span class="title"><a href="/blog/'+posts[i][1]+'" title="'+posts[i][0] + ', ' + posts[i][2]+'">'+posts[i][2]+'</a></span></div>\n';
+	    }
+	    if(i == postIndex + 1){// to older post
+		//<span class="date">'+posts[i][0] +'</span> 
+		nav_links +='<div class="index_item">'+olderPostMarker+'<span class="title"><a href="/blog/'+posts[i][1]+'" title="'+posts[i][0] + ', ' + posts[i][2]+'">'+posts[i][2]+'</a></span></div>\n';
+	    }
+	}
+	
+	//console.log(nav_links);
+	if(nav_links.length > 0){
+            document.getElementById('blog_nav').innerHTML = nav_links;
+            document.getElementById('blog_nav').style.display = "block";            
+        }
+    }else{
+        //console.log("Post not found, not creating the nav");
+    }
+    }
+    
+    var docPathName = document.location.pathname;
+    //console.log(docPathName);
+    if(docPathName == '/blog/' || docPathName == "/blog/archives.html" || docPathName.substring(0, 5) != '/blog'){
+    // blog index page, archive page or home page.
+       document.getElementById('blog_end').style.display = "none";
+    }else{
+        docPathName = docPathName.substring(6);
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", '/blog/titles', true);
+        oReq.onload = addBlogNav;
+        oReq.send();
+    }
+
+</script>
+
 (end of _blog-footer.html)

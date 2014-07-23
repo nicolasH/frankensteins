@@ -43,7 +43,7 @@ uses almost no variable.
 ## \_\_\_.sh
 
 
-The script. The only script. It generates a website from a set of
+The only script. Every other files are It generates a website from a set of
 Markdown files. It transform the files into HTML pages in 4 (+1)
 different ways depending on which folder the files are in. In general,
 each transformed page will consist of concatenating the
