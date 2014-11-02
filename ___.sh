@@ -8,7 +8,7 @@ fi
 
 if [ "$1" = "new" ];then
     echo "  new [title] : Creates a blog post at blog/[current_date].[prettified title].md ."
-    echo "$2" >> content/blog/`date +%Y-%m-%d.%H%M.``echo $2 |sed 's:[\ \" \, \.\:\?\!_]:\-:g' | sed -e "s:':\-:g" | sed -e 's:\-\-*:\-:g'| sed -e 's:\-$::;s:^\-::'`.md;exit
+    echo "$2" >> content/blog/`date +%Y-%m-%d.%H%M.``echo $2 |sed 's:[^[:alnum:]_]:-:g' | sed -e 's:--*:-:g'| sed -e 's:-$::;s:^-::'`.md;exit
 fi
 
 if [ "$1" = "clean" ];then
@@ -37,16 +37,16 @@ if [ "$1" = "gen" ];then
     sed -E -e :a -e '/(.*.html)$/N; s/\n/">/; ta' titles | sed -E 's:(.{11})(.*):<div class=\"index_item\"><span class="date">\1</span> <span class="title"><a href="/blog/\2</a></span></div>:'>> archives.html
     cat ../_footer.html >> archives.html
     echo "5 - Creating the blog feed.xml"; cat ../_feed-top.xml > feed.xml
-    ls *.md|sort -r| head -n 10 | sed -E 's@(....)-(..)-(..).(....).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>" >> feed.xml; sed -n -E "s|^.*xml:base=\\"\(.*\)\\".*$|\\1/blog/\1/\2/\3/\5.html</link><pubDate>|p" ../_feed-top.xml >> feed.xml;date -j -f "%Y/%m/%d %H%M" "\1/\2/\3 \4"  "+%a, %d %b %Y %H:%M:%S %z" >>feed.xml;echo "</pubDate><content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
+    ls *.md|sort -r| head -n 30 | sed -E 's@(....)-(..)-(..).(....).(.*).md@echo "<item><title>">> feed.xml; head -n 1 & |tr -d "#" >> feed.xml;echo "</title><link>" >> feed.xml; sed -n -E "s|^.*xml:base=\\"\(.*\)\\".*$|\\1/blog/\1/\2/\3/\5.html</link>|p" ../_feed-top.xml >> feed.xml;echo "<pubDate>`date -j -f "%Y/%m/%d %H%M" "\1/\2/\3 \4"  "+%a, %d %b %Y %H:%M:%S %z"`</pubDate>" >>feed.xml;echo "<content:encoded><![CDATA[">> feed.xml;sed -e "1d" &|multimarkdown >> feed.xml;echo "]]></content:encoded></item>">>feed.xml@' | bash
     echo "</channel></rss>" >> feed.xml; cd ../../
     # Projects
     echo "6 - Generating the projects pages"
-    cd content/projects; find . -type f -iname '*.blurb' | sed -E 's:.\/(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang; echo "" >> \1.lang:' | bash
+    cd content/projects; find */*/*.blurb | sed -E 's:(.+)\/(.+)\/(.*):echo "### [\2](\1/\2/)" >> \1.lang; cat \1/\2/\3 >> \1.lang; echo "" >> \1.lang:' | bash
     ls *.lang | sed -E 's:(.*).lang:echo "## \1" >> index.txt; cat \1.lang >> index.txt:'|bash
     cat ../_header.html > index.html; echo "Projects" >> index.html;  sed "s%projects nohl%projects highlighted%" ../_nav.html>> index.html
     multimarkdown index.txt >> index.html; cat ../_footer.html >> index.html
-    find . -type f -iname '*.md'| sed -E 's:.\/(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; sed "s%projects nohl%projects highlighted%" ../_nav.html >> \1/\2/index.html;  multimarkdown & >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang; cd ../../
-    # Pages
+    ls */*/*.md| sed -E 's:(.+)\/(.+)\/(.*):cat ../_header.html > \1/\2/index.html;echo "\2" >> \1/\2/index.html; sed "s%projects nohl%projects highlighted%" ../_nav.html >> \1/\2/index.html; sed -E "1 s%^([#]*) (.*)$%\\1 [\\2](.)%" & | multimarkdown >> \1/\2/index.html; cat ../_footer.html >> \1/\2/index.html:' | bash; rm index.txt; rm *.lang; cd ../../
+    # Notes
     echo "7 - Generating notes pages"
     cd content/notes; find . -type f -iname '*.index' -delete; find . -type f -iname '*.html' -delete;
     # Begin the notes/index.html page
@@ -76,8 +76,8 @@ if [ "$1" = "gen" ];then
     # Plain pages
     echo "9 - Generating single pages"
     cd content/pages/
-    ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md | tr -d "#" >> \1.html ; sed "s%\1 nohl%\1 highlighted%" ../_nav.html >> \1.html ; echo "<h2><a href=\"/pages/\1.html\">">>\1.html;head -n 1 & | tr -d "#" >> \1.html; echo "</a></h2>">> \1.html; sed -e "1d" & > tmp.txt ; multimarkdown tmp.txt >>\1.html; cat ../_footer.html >> \1.html:'|bash
-    rm home.html tmp.txt; cd ../../
+    ls *.md | sed -E 's:(.+).md:cat ../_header.html > \1.html; head -n 1 \1.md | tr -d "#" >> \1.html ; sed "s%\1 nohl%\1 highlighted%" ../_nav.html >> \1.html ; sed -E "1 s%^([#]*) (.*)$%\\1 [\\2](/pages/\1.html)%" & | multimarkdown >> \1.html; cat ../_footer.html >> \1.html:'|bash
+    rm home.html; cd ../../
     exit
 fi
 
