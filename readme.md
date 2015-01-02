@@ -2,11 +2,10 @@
 
 _By Nicolas Hoibian._
 
+__!!!__ This is the 2.0 version. Details for migrating from 1.x at the
+bottom.
 
-__!!!__ This is the 2.0 version, with quite a few changes
-from the previous, blog-only 1.0 . Migrating is
-simple, but manual and mandatory. Details at the bottom.
-
+Version 2.1: now works on Linux and OSX/Darwin/BSD!
 
 __\_\_\_.sh__ : _The answer to your questions about static html sites in
 42*2 lines of bash (and thousands of lines of C)._
@@ -31,13 +30,11 @@ It is a nameless, horrible and recursive assemblage of `bash`, `sed`,
 `cat`, `echo`, `date`, `mkdir` etc..., has no option, no `for`, and
 uses almost no variable.
 
-
 ### Requirements
 
 - [multimarkdown][mmd] in the script's `$PATH`. 
-- `mkdir`, `bash`, `sed`, `cat`, `find`, `echo`, `grep`, `cd`.
-- a `date` command implementation that supports `date -j -f "%Y/%m/%d %H%M" "2014/07/07 1333"  "+%a, %d %b %Y %H:%M:%S %z"` (most likely a BSD/OSX version).
-
+- `mkdir`, `bash`, `sed`, `cat`, `find`, `echo`, `grep`, `cd`, 
+- GNU or Darwin/BSD `date`.
 
 
 ## \_\_\_.sh
